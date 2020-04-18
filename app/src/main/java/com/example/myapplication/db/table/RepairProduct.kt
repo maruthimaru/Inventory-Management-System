@@ -21,5 +21,7 @@ class RepairProduct {
     lateinit var image:String;
     @ColumnInfo(name = "dateTime")
     lateinit var dateTime:String;
+    @ColumnInfo(name = "lastservicecdateTime")
+    lateinit var lastservicecdateTime:String;
 
 }
