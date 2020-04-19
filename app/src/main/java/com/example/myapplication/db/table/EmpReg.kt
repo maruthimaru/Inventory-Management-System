@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "empreg")
 class EmpReg {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
     var id=0;
@@ -26,4 +26,22 @@ class EmpReg {
     lateinit var type:String;
     @ColumnInfo(name = "dateTime")
     lateinit var dateTime:String;
+
+    constructor(
+        name: String,
+        age: String,
+        phNo: String,
+        empId: String,
+        password: String,
+        type: String,
+        dateTime: String
+    ) {
+        this.name = name
+        this.age = age
+        this.phNo = phNo
+        this.empId = empId
+        this.password = password
+        this.type = type
+        this.dateTime = dateTime
+    }
 }

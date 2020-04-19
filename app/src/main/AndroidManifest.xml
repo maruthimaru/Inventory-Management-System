@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.EmployeeLoginActivity"></activity>
+        <activity android:name=".activity.EmployeeRegsiterActivity"></activity>
+        <activity android:name=".activity.EmployeeLoginActivity" />
         <activity android:name=".activity.AdminMainActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>

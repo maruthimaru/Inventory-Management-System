@@ -1,4 +1,4 @@
-package com.scoto.visitormanagent.db
+package com.example.myapplication.db
 
 import android.content.Context
 import androidx.room.Database
@@ -11,7 +11,7 @@ import com.example.myapplication.db.dao.RepairProductDao
 import com.example.myapplication.db.table.*
 
 @Database(
-        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class], version = 7, exportSchema = false)
+        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class], version = 2, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
 

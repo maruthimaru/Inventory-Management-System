@@ -7,8 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity (tableName = "login")
 class Login {
-
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
     var  id=0
