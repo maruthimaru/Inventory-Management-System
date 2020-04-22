@@ -89,21 +89,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/doctor_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/logoBlue"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="@dimen/size_30dp"
-        android:textSize="@dimen/size_12dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:text="Doctor Registration"
-        android:layout_below="@+id/cardviewlayout"
-        tools:ignore="UnknownId"
-        android:layout_alignParentRight="true" />
+
 
 </RelativeLayout>

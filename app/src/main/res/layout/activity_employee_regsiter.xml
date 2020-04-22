@@ -103,6 +103,7 @@
                 android:padding="@dimen/size_3dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/size_14dp"
+
                 android:textStyle="bold"
                 android:text="Enter Type" />
 
@@ -116,15 +117,7 @@
                 android:background="@drawable/bordergray"
                 android:inputType="textPostalAddress"
                 android:hint="Enter Type" />
-            <TextView
-                android:id="@+id/datetitext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/size_3dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/size_14dp"
-                android:textStyle="bold"
-                android:text="Enter  Date and time" />
+
             <EditText
                 android:id="@+id/datetime"
                 android:layout_width="match_parent"
@@ -132,9 +125,93 @@
                 android:maxLength="@integer/int_200"
                 android:textSize="@dimen/size_14dp"
                 android:padding="@dimen/size_3dp"
+                android:visibility="gone"
                 android:background="@drawable/bordergray"
                 android:inputType="textAutoComplete"
-                android:hint="Enter Date and time" />
+                android:hint="Enter Date" />
+            <TextView
+                android:id="@+id/datetitext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:text="Enter Date" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@drawable/bordergray"
+                android:layout_marginLeft="@dimen/size_8dp"
+                android:layout_marginRight="@dimen/size_8dp"
+                android:layout_toLeftOf="@+id/dmidborder">
+
+                <TextView
+                    android:id="@+id/dates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/da"
+                    android:background="@android:color/transparent"
+                    android:maxLength="@integer/int_10"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    android:text="00/00/00"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/size_14dp" />
+
+                <ImageView
+                    android:id="@+id/date_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/da"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size_8dp"/>
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/titext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:textStyle="bold"
+                android:text="Enter Time" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bordergray"
+                android:layout_marginLeft="@dimen/size_8dp"
+                android:layout_marginRight="@dimen/size_8dp"
+                android:layout_toRightOf="@+id/dmidborder"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/ti"
+                    android:background="@android:color/transparent"
+                    android:hint="00:00"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/size_14dp" />
+
+                <ImageView
+                    android:id="@+id/time_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ti"
+                    android:src="@drawable/ic_clock"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size_8dp" />
+            </RelativeLayout>
 
 
             <TextView

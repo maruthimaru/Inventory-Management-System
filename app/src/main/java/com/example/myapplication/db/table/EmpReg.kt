@@ -24,9 +24,10 @@ class EmpReg {
     lateinit var password:String;
     @ColumnInfo(name = "type")
     lateinit var type:String;
-    @ColumnInfo(name = "dateTime")
-    lateinit var dateTime:String;
-
+    @ColumnInfo(name = "date")
+    lateinit var date:String;
+    @ColumnInfo(name ="time")
+    lateinit var time:String;
     constructor(
         name: String,
         age: String,
@@ -34,7 +35,8 @@ class EmpReg {
         empId: String,
         password: String,
         type: String,
-        dateTime: String
+        date: String,
+        time: String
     ) {
         this.name = name
         this.age = age
@@ -42,6 +44,7 @@ class EmpReg {
         this.empId = empId
         this.password = password
         this.type = type
-        this.dateTime = dateTime
+        this.date = date
+        this.time = time
     }
 }

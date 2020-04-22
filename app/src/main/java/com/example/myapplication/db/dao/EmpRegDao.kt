@@ -15,6 +15,9 @@ interface EmpRegDao{
     @Query("select * from empreg")
     fun getAll():List<EmpReg>
 
+    @Query("select * from empreg where empid = :empid and password= :password")
+    fun getloginlist(empid:String, password:String):List<EmpReg>
+
 
 
 }

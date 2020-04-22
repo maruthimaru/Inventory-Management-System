@@ -15,5 +15,12 @@ class Login {
     lateinit var empid:String;
     @ColumnInfo(name = "password")
     lateinit var password:String;
+    @ColumnInfo(name = "type")
+    lateinit var type:String;
 
+    constructor(empid: String, password: String, type: String) {
+        this.empid = empid
+        this.password = password
+        this.type = type
+    }
 }

@@ -3,6 +3,7 @@ package com.example.myapplication.helper
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.activity.LoginActivity
 import com.example.myapplication.helper.pojo.NavDrawerItem
+import com.example.myapplication.utils.StringsValue
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -29,6 +31,7 @@ class CommonMethods{
     private val TAG=CommonMethods::class.java.simpleName
     private lateinit var dateListener: DateListener
     private var picker: DatePickerDialog? = null
+    internal var stringsValue = StringsValue()
 
     constructor(context: Context){
         CommonMethods.context = context    }
@@ -98,12 +101,12 @@ class CommonMethods{
             monthOfYear = monthOfYear + 1
             var fm = "" + monthOfYear
             var fd = "" + dayOfMonth
-            if (monthOfYear < 10) {
-                fm = "0$monthOfYear"
-            }
-            if (dayOfMonth < 10) {
-                fd = "0$dayOfMonth"
-            }
+//            if (monthOfYear < 10) {
+//                fm = "0$monthOfYear"
+//            }
+//            if (dayOfMonth < 10) {
+//                fd = "0$dayOfMonth"
+//            }
             //                        _Date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
             Date = "$fd-$fm-$year"
             data.setText(Date)
@@ -111,9 +114,44 @@ class CommonMethods{
         picker!!.show()
         val minDate = getDate(Constants.dateformat1, getdate(Constants.ddmmyyyy))
         Log.e(TAG, "DATE VALIDATION " + minDate)
-        picker!!.datePicker.minDate = minDate
+        picker!!.datePicker.maxDate = minDate
+    }
+    //get curent date
+    fun date(input: String): String {
+        val df = SimpleDateFormat(input)
+        return df.format(Calendar.getInstance().time).toString()
     }
 
+    fun clickTime(_time: TextView) {
+        //for changing time
+        val time = arrayOf(null.toString())
+        val status = booleanArrayOf(false)
+        val mcurrentTime = Calendar.getInstance()
+        val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = mcurrentTime.get(Calendar.MINUTE)
+        var mTimePicker: TimePickerDialog? = null
+        val finalMTimePicker = mTimePicker
+        mTimePicker = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { timePicker, hourOfDay, minute ->
+            if (hourOfDay >= 10) {
+                if (minute >= 10) {
+                    time[0] = "$hourOfDay:$minute"
+                } else {
+                    time[0] = "$hourOfDay:0$minute"
+                }
+            } else {
+                if (minute >= 10) {
+                    time[0] = "0$hourOfDay:$minute"
+                } else {
+                    time[0] = "0$hourOfDay:0$minute"
+                }
+            }
+            _time.text = time[0]
+        }, hour, minute, true)
+
+        mTimePicker.setTitle(stringsValue.titleTime)
+        mTimePicker.show()
+        Log.e("TAG", "clickTime: " + time[0])
+    }
 
     // convert from bitmap to byte array
     @Throws(Exception::class)
