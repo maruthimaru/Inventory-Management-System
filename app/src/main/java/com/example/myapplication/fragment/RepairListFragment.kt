@@ -1,6 +1,5 @@
 package com.example.myapplication.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.utils.QRCodeScannerPortait
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RepairListFragment : Fragment() {
@@ -32,8 +30,8 @@ class RepairListFragment : Fragment() {
 
         fab.setOnClickListener{
 
-            val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
-            startActivityForResult(connectIntent, 20)
+//            val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
+//            startActivityForResult(connectIntent, 20)
         }
     }
 
