@@ -65,6 +65,7 @@ class EmployeeLoginActivity : AppCompatActivity() {
         else{
             var registerlist=empRegisterDao.getloginlist(Empid,pass)
             Log.e("TAG", " login  " + registerlist.size)
+
             if (registerlist.size==1){
                 listlogin.add(Login(Empid,pass,"Employee"))
                 Log.e("TAG", " loginlist  " + listlogin.size)

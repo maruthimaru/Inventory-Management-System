@@ -2,6 +2,7 @@ package com.example.myapplication.utils
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,7 @@ class QRCodeScannerPortait : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val integrator = ZxingOrient(this)
         integrator.setInfo("Scan a barcode or QRcode")
-        integrator.initiateScan(Barcode.DEFAULT_CODE_TYPES)
+        integrator.initiateScan(Barcode.QR_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
