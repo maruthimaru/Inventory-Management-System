@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "repair_product")
 class RepairProduct {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     @ColumnInfo(name = "id")
     var id=0;
@@ -19,9 +19,26 @@ class RepairProduct {
     lateinit var pCode:String;
     @ColumnInfo(name = "image")
     lateinit var image:String;
-    @ColumnInfo(name = "dateTime")
-    lateinit var dateTime:String;
+    @ColumnInfo(name = "date")
+    lateinit var date:String;
+    @ColumnInfo(name = "time")
+    lateinit var time:String;
     @ColumnInfo(name = "lastservicecdateTime")
     lateinit var lastservicecdateTime:String;
 
+    constructor(
+        pName: String,
+        pCode: String,
+        image: String,
+        date: String,
+        time: String,
+        lastservicecdateTime: String
+    ) {
+        this.pName = pName
+        this.pCode = pCode
+        this.image = image
+        this.date = date
+        this.time = time
+        this.lastservicecdateTime = lastservicecdateTime
+    }
 }

@@ -15,7 +15,7 @@ fun insert(productDetails: ProductDetails)
     @Query("Select * from product_details")
     fun getAll():List<ProductDetails>
 
-    @Query("select * from product_details where id = :id ")
-    fun getid(id:String):List<ProductDetails>
+    @Query("select * from product_details where p_code = :p_code ")
+    fun getid(p_code:String):List<ProductDetails>
 
 }

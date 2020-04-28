@@ -2,7 +2,6 @@ package com.example.myapplication.fragment
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,32 +13,37 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.activity.EmployeeLoginActivity
+import com.example.myapplication.adapter.Repair_ProductAdapter
 import com.example.myapplication.db.AppDatabase
-import com.example.myapplication.db.dao.EmpRegDao
 import com.example.myapplication.db.dao.ProductDetailsDao
-import com.example.myapplication.db.table.EmpReg
+import com.example.myapplication.db.dao.RepairProductDao
 import com.example.myapplication.db.table.ProductDetails
+import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
-import com.example.myapplication.helper.DialogToast
+import com.example.myapplication.helper.Constants
 import com.example.myapplication.utils.QRCodeScannerPortait
 import com.example.myapplication.utils.StringsValue
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.io.File
-import java.io.IOException
 import java.util.ArrayList
 
-class RepairListFragment : Fragment() {
+class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener {
     private val TAG: String= RepairListFragment::class.java.simpleName
     internal var list=ArrayList<ProductDetails>()
+    internal var repairlist=ArrayList<RepairProduct>()
     internal lateinit var view: View
     internal lateinit var recyclerView: RecyclerView
+    lateinit var repairadapter: Repair_ProductAdapter
+
     lateinit var fab: FloatingActionButton
-    internal lateinit var dialogToast: DialogToast
+    private var lLayout: GridLayoutManager? = null
+    //internal lateinit var dialogToast: DialogToast
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
+    lateinit var repairporductDao:RepairProductDao
     internal lateinit var commonMethods: CommonMethods
 
     override fun onCreateView(
@@ -58,6 +62,17 @@ class RepairListFragment : Fragment() {
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
+        repairporductDao=appDatabase.repairProductDao()
+
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = lLayout
+        repairlist= repairporductDao.getAll() as ArrayList<RepairProduct>
+        Log.e(TAG,"repairlistttt " + repairlist.size )
+        repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
+        recyclerView.adapter = repairadapter
+
 
         fab.setOnClickListener{
 
@@ -66,23 +81,37 @@ class RepairListFragment : Fragment() {
         }
     }
 
+    //set adapter
+    private fun setAdapter(list: MutableList<RepairProduct>) {
+
+        if (list.size > 0) {
+            repairadapter = Repair_ProductAdapter( activity!!,list, this)
+            recyclerView.adapter = repairadapter
+//            nodatatextview.visibility = View.GONE
+//            nodataimg.visibility=View.GONE
+//            recycleview.visibility = View.VISIBLE
+        } else {
+
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
             val bundle = data!!.extras
-            val id = bundle!!.getString(StringsValue.param)
-            Log.e("TAG", "onActivityResult: " + id!!)
-            if (id == null) {
-                dialogToast.toastMethod(activity!!, resources.getString(R.string.cancel))
+            val pcode = bundle!!.getString(StringsValue.param)
+            Log.e("TAG", "onActivityResult: " + pcode!!)
+            if (pcode == null) {
+                Toast.makeText(activity,"Cancel", Toast.LENGTH_SHORT).show()
+
             } else {
-                // consigmentNo.setText(id)
-                var productdetails = productDao.getid(id)
-                Log.e("TAG", " product_id  " + productdetails.size)
+                var productdetails = productDao.getid(pcode)
+                Log.e("TAG", " product_code  " + productdetails.size)
                 if (productdetails.size == 0) {
-                    dialogToast.toastMethod(activity!!, resources.getString(R.string.InvalidQRcode))
+                    Toast.makeText(activity,"Invalid QRcode", Toast.LENGTH_SHORT).show()
                 } else {
-                    productdetails[0].pName
-                    Log.e("TAG", " product_id  " + productdetails[0].pName)
+                    productdetails[0].pCode
+                    Log.e("TAG", " product_codeeqee  " + productdetails[0].pCode)
 
                     val alertDialog = androidx.appcompat.app.AlertDialog.Builder(activity!!)
                     val inflater = activity!!.layoutInflater
@@ -91,23 +120,29 @@ class RepairListFragment : Fragment() {
                     val confirmDialog = alertDialog.create()
                     confirmDialog.show()
                     confirmDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    val productid = view.findViewById<TextView>(R.id.product_id)
+                    val producttime = view.findViewById<TextView>(R.id.product_time)
                     val productname = view.findViewById<TextView>(R.id.product_name)
                     val productcode = view.findViewById<TextView>(R.id.product_code)
                     val productimage = view.findViewById<TextView>(R.id.product_image)
-                    val prod_datetime = view.findViewById<TextView>(R.id.prodate_time)
+                    val prod_date = view.findViewById<TextView>(R.id.product_date)
                     val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
                     val buttonOk = view.findViewById<Button>(R.id.buttonOk)
 
-                    productid.setText( productdetails[0].id)
+                    producttime.setText( productdetails[0].time)
                     productname.setText( productdetails[0].pName)
                     productcode.setText( productdetails[0].pCode)
                     productimage.setText( productdetails[0].image)
-                    prod_datetime.setText( productdetails[0].dateTime)
+                    prod_date.setText( productdetails[0].date)
 
 
                     buttonOk.setOnClickListener { v ->
-                        //confirmDialog.dismiss()
+                      repairlist.add(RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
+                          commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(Constants.timeformat12),""))
+                        Log.e("TAG", " doctorregister  " + repairlist.size)
+                        repairporductDao.insert(repairlist)
+//                        Log.e(TAG,"insertdata " + repairporductDao.getAll().size)
+                        confirmDialog.dismiss()
+
 
                     }
                     buttonCancel.setOnClickListener{
@@ -131,5 +166,12 @@ class RepairListFragment : Fragment() {
         fragmentTransaction.replace(R.id.frameLayout, _fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    override fun onClickButton(position: Int, list: RepairProduct, type: String) {
+
+    }
+
+    override fun onClickCheckOut(list: RepairProduct) {
     }
 }

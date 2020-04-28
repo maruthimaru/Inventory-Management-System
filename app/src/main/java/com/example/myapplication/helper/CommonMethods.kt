@@ -46,6 +46,7 @@ class CommonMethods{
                 Base64.NO_WRAP)
 
     }
+
     fun getdate(time: String, input: String, outTime: String): String? {
 
         var inputFormat = SimpleDateFormat(input)

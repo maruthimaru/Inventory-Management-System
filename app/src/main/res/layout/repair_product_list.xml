@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/cardview"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_marginLeft="@dimen/size_5dp"
+    android:layout_marginRight="@dimen/size_5dp"
+    app:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="@dimen/size_2dp"
+    card_view:cardElevation="@dimen/size_2dp"
+    app:ignore="NamespaceTypo">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_5dp">
+
+        <LinearLayout
+            android:id="@+id/first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/size_1dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="@dimen/size_60dp"
+                android:visibility="visible"
+                android:layout_height="@dimen/size_65dp"
+                android:layout_centerInParent="true" />
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/first"
+    android:layout_marginBottom="@dimen/size_4dp"
+    android:layout_marginLeft="@dimen/size_5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:hint="Product name"
+        android:maxLength="@integer/int_50"
+        android:textStyle="bold"
+        android:textColor="@color/text_color"
+        android:maxLines="@integer/int_15"
+        android:textSize="@dimen/size_15dp" />
+
+    <TextView
+        android:id="@+id/pcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:hint="Product code"
+        android:maxLength="@integer/int_50"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/size_3dp"
+        android:textColor="@color/text_color"
+        android:maxLines="@integer/int_15"
+        android:textSize="@dimen/size_15dp" />
+    <TextView
+        android:id="@+id/last_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:hint="Last date"
+        android:visibility="gone"
+        android:maxLength="@integer/int_50"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/size_3dp"
+        android:textColor="@color/text_color"
+        android:maxLines="@integer/int_15"
+        android:textSize="@dimen/size_15dp" />
+
+</LinearLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/size_0_7dp"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_below="@id/first"
+            android:background="@color/hint_color" />
+        <TextView
+            android:id="@+id/pro_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:padding="@dimen/size_2dp"
+            android:layout_below="@+id/view"
+            android:drawablePadding="@dimen/size_3dp"
+            android:text="date"
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/size_12dp" />
+
+        <TextView
+            android:id="@+id/pro_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/size_2dp"
+            android:layout_below="@+id/view"
+            android:drawablePadding="@dimen/size_3dp"
+            android:text="time"
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/size_12dp"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

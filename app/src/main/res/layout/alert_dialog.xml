@@ -25,28 +25,15 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutBikeDetails"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_10dp"
-                android:layout_marginTop="30dp">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/product_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/size_14dp"
-                    android:text="Msg"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/size_14dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/size_14dp" />
+
                 <TextView
                     android:id="@+id/product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Product name"
-                    android:layout_below="@+id/product_id"
+
                     android:textSize="@dimen/size_14dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -75,15 +62,28 @@
                     android:layout_centerHorizontal="true"/>
 
                 <TextView
-                    android:id="@+id/prodate_time"
+                    android:id="@+id/product_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date Time"
+                    android:text="Date"
                     android:layout_below="@+id/product_image"
                     android:textSize="@dimen/size_14dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/product_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/product_date"
+                    android:text="Time"
+                    android:visibility="visible"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_14dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/size_14dp" />
 
 
 
@@ -91,7 +91,6 @@
                     android:id="@+id/linearLayoutLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/date_time"
                     android:layout_alignParentBottom="true"
                     android:layout_marginEnd="@dimen/size_5dp"
                     android:layout_marginStart="@dimen/size_5dp"
