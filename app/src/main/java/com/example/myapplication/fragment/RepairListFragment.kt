@@ -39,7 +39,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
     lateinit var repairadapter: Repair_ProductAdapter
 
     lateinit var fab: FloatingActionButton
-    private var lLayout: GridLayoutManager? = null
+//    private var lLayout: GridLayoutManager? = null
     //internal lateinit var dialogToast: DialogToast
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
@@ -67,7 +67,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = lLayout
+//        recyclerView.layoutManager = lLayout
         repairlist= repairporductDao.getAll() as ArrayList<RepairProduct>
         Log.e(TAG,"repairlistttt " + repairlist.size )
         repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
