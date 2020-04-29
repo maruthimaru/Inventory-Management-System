@@ -28,6 +28,7 @@ import com.example.myapplication.helper.Constants
 import com.example.myapplication.utils.QRCodeScannerPortait
 import com.example.myapplication.utils.StringsValue
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.Exception
 import java.util.ArrayList
 
 class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener {
@@ -81,78 +82,70 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         }
     }
 
-    //set adapter
-    private fun setAdapter(list: MutableList<RepairProduct>) {
 
-        if (list.size > 0) {
-            repairadapter = Repair_ProductAdapter( activity!!,list, this)
-            recyclerView.adapter = repairadapter
-//            nodatatextview.visibility = View.GONE
-//            nodataimg.visibility=View.GONE
-//            recycleview.visibility = View.VISIBLE
-        } else {
-
-        }
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
-            val bundle = data!!.extras
-            val pcode = bundle!!.getString(StringsValue.param)
-            Log.e("TAG", "onActivityResult: " + pcode!!)
-            if (pcode == null) {
-                Toast.makeText(activity,"Cancel", Toast.LENGTH_SHORT).show()
+        try{
+            if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
+                val bundle = data!!.extras
+                val pcode = bundle!!.getString(StringsValue.param)
+                Log.e("TAG", "onActivityResult: " + pcode!!)
+                if (pcode == null) {
+                    Toast.makeText(activity,"Cancel", Toast.LENGTH_SHORT).show()
 
-            } else {
-                var productdetails = productDao.getid(pcode)
-                Log.e("TAG", " product_code  " + productdetails.size)
-                if (productdetails.size == 0) {
-                    Toast.makeText(activity,"Invalid QRcode", Toast.LENGTH_SHORT).show()
                 } else {
-                    productdetails[0].pCode
-                    Log.e("TAG", " product_codeeqee  " + productdetails[0].pCode)
+                    var productdetails = productDao.getid(pcode)
+                    Log.e("TAG", " product_code  " + productdetails.size)
+                    if (productdetails.size == 0) {
+                        Toast.makeText(activity,"Invalid QRcode", Toast.LENGTH_SHORT).show()
+                    } else {
+                        productdetails[0].pCode
+                        Log.e("TAG", " product_codeeqee  " + productdetails[0].pCode)
 
-                    val alertDialog = androidx.appcompat.app.AlertDialog.Builder(activity!!)
-                    val inflater = activity!!.layoutInflater
-                    val view = inflater.inflate(R.layout.alert_dialog, null)
-                    alertDialog.setView(view)
-                    val confirmDialog = alertDialog.create()
-                    confirmDialog.show()
-                    confirmDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                    val producttime = view.findViewById<TextView>(R.id.product_time)
-                    val productname = view.findViewById<TextView>(R.id.product_name)
-                    val productcode = view.findViewById<TextView>(R.id.product_code)
-                    val productimage = view.findViewById<TextView>(R.id.product_image)
-                    val prod_date = view.findViewById<TextView>(R.id.product_date)
-                    val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
-                    val buttonOk = view.findViewById<Button>(R.id.buttonOk)
+                        val alertDialog = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+                        val inflater = activity!!.layoutInflater
+                        val view = inflater.inflate(R.layout.alert_dialog, null)
+                        alertDialog.setView(view)
+                        val confirmDialog = alertDialog.create()
+                        confirmDialog.show()
+                        confirmDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                        val producttime = view.findViewById<TextView>(R.id.product_time)
+                        val productname = view.findViewById<TextView>(R.id.product_name)
+                        val productcode = view.findViewById<TextView>(R.id.product_code)
+                        val productimage = view.findViewById<TextView>(R.id.product_image)
+                        val prod_date = view.findViewById<TextView>(R.id.product_date)
+                        val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
+                        val buttonOk = view.findViewById<Button>(R.id.buttonOk)
 
-                    producttime.setText( productdetails[0].time)
-                    productname.setText( productdetails[0].pName)
-                    productcode.setText( productdetails[0].pCode)
-                    productimage.setText( productdetails[0].image)
-                    prod_date.setText( productdetails[0].date)
+                        producttime.setText( productdetails[0].time)
+                        productname.setText( productdetails[0].pName)
+                        productcode.setText( productdetails[0].pCode)
+                        productimage.setText( productdetails[0].image)
+                        prod_date.setText( productdetails[0].date)
 
 
-                    buttonOk.setOnClickListener { v ->
-                      repairlist.add(RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
-                          commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(Constants.timeformat12),""))
-                        Log.e("TAG", " doctorregister  " + repairlist.size)
-                        repairporductDao.insert(repairlist)
+                        buttonOk.setOnClickListener { v ->
+                            repairlist.add(RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
+                                commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(Constants.timeformat12),""))
+                            Log.e("TAG", " doctorregister  " + repairlist.size)
+                            repairporductDao.insert(repairlist)
 //                        Log.e(TAG,"insertdata " + repairporductDao.getAll().size)
-                        confirmDialog.dismiss()
+                            confirmDialog.dismiss()
+
+
+                        }
+                        buttonCancel.setOnClickListener{
+                            confirmDialog.dismiss()
+                        }
+
 
 
                     }
-                    buttonCancel.setOnClickListener{
-                        confirmDialog.dismiss()
-                    }
-
-
-
                 }
             }
+        }catch (e:Exception){
+            Log.e("TAG", " try " + e.localizedMessage)
         }
 
     }

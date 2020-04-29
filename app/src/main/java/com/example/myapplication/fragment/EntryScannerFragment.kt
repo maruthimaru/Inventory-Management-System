@@ -17,45 +17,47 @@ import com.example.myapplication.R
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.table.ProductDetails
+import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
+import com.example.myapplication.helper.Constants
 import com.example.myapplication.utils.QRCodeScannerPortait
 import com.example.myapplication.utils.StringsValue
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.lang.Exception
 import java.util.ArrayList
 
-class EntryFragment:Fragment(){
-    private val TAG: String= EmployeeHomeFragment::class.java.simpleName
-    lateinit var entry_btn:Button
-    lateinit var update_btn:Button
+class EntryScannerFragment:Fragment(){
+    private val TAG: String= EntryScannerFragment::class.java.simpleName
     internal var list= ArrayList<ProductDetails>()
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
     internal lateinit var commonMethods: CommonMethods
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_entry, container, false)
+        return inflater.inflate(R.layout.fragment_entry_scanner, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        entry_btn=view.findViewById(R.id.entry_btn)
-        update_btn=view.findViewById(R.id.update_btn)
+
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
 
-        entry_btn.setOnClickListener{
+
             val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
             startActivityForResult(connectIntent, 20)
-        }
+
+
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         try {
-            if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
-                val bundle = data!!.extras
-                val pcode = bundle!!.getString(StringsValue.param)
-                Log.e("TAG", "onActivityResult: " + pcode!!)
+        if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
+            val bundle = data!!.extras
+            val pcode = bundle!!.getString(StringsValue.param)
+            Log.e("TAG", "onActivityResult: " + pcode!!)
 
 
 
@@ -112,7 +114,7 @@ class EntryFragment:Fragment(){
 
 
         }
-        catch (e: Exception){
+        catch (e:Exception){
 
             Log.e("TAG", " try_catch  " + e.localizedMessage)
         }
@@ -126,4 +128,5 @@ class EntryFragment:Fragment(){
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
 }

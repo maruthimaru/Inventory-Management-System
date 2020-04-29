@@ -25,7 +25,7 @@
         android:layout_below="@+id/entry_update_btn"
         android:layout_marginTop="@dimen/size_30dp"
         android:background="@drawable/buttonboxshapeandbackg1"
-        android:text="@string/repair"
+        android:text="Damage"
         android:textColor="@color/white"
         android:textSize="@dimen/size_14dp"
         android:textStyle="bold"
