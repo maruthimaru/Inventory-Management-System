@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:gravity="center"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginRight="@dimen/size_20dp"
-        android:layout_marginTop="@dimen/size_10dp"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/damage_repair"
+        android:layout_width="@dimen/size_150dp"
+        android:layout_height="@dimen/size_40dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonboxshapeandbackg1"
+        android:text="Damage repair"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_14dp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/Product"
+        android:layout_width="@dimen/size_150dp"
+        android:layout_height="@dimen/size_40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/damage_repair"
+        android:layout_marginTop="@dimen/size_30dp"
+        android:background="@drawable/buttonboxshapeandbackg1"
+        android:text="Product"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_14dp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+
+</RelativeLayout>

@@ -22,4 +22,5 @@ class ProductDetails {
     lateinit var date:String;
     @ColumnInfo(name = "time")
     lateinit var time:String;
+
 }
