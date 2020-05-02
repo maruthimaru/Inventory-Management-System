@@ -13,63 +13,64 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.adapter.Repair_ProductAdapter
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.db.dao.ProductDetailsDao
+import com.example.myapplication.db.dao.RepairProductDao
 import com.example.myapplication.db.table.ProductDetails
+import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
+import com.example.myapplication.helper.Constants
 import com.example.myapplication.utils.QRCodeScannerPortait
 import com.example.myapplication.utils.StringsValue
-import com.google.android.material.internal.ScrimInsetsFrameLayout
 import java.lang.Exception
 import java.util.ArrayList
 
-class AdminHomeFragment: Fragment(){
-    private val TAG: String= AdminHomeFragment::class.java.simpleName
-    internal lateinit var view: View
-    lateinit var damage_repair:Button
-    lateinit var Product:Button
-    lateinit var damage:Button
+class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListener{
+    private val TAG: String= AdminRepairListFragment::class.java.simpleName
     internal var list= ArrayList<ProductDetails>()
+    internal var repairlist= ArrayList<RepairProduct>()
+    internal lateinit var recyclerView: RecyclerView
+    lateinit var repairadapter: Repair_ProductAdapter
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
+    lateinit var repairporductDao: RepairProductDao
     internal lateinit var commonMethods: CommonMethods
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return  inflater.inflate(R.layout.fragment_admin_home, container, false)
+        return  inflater.inflate(R.layout.fragment_admin_repair_list,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        damage_repair=view.findViewById(R.id.damage_repair)
-        Product=view.findViewById(R.id.Product)
-        damage=view.findViewById(R.id.damage)
+        recyclerView=view.findViewById(R.id.recyclerView)
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
+        repairporductDao=appDatabase.repairProductDao()
 
-        damage_repair.setOnClickListener{
-                   val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
-                    startActivityForResult(connectIntent, 20)
-        }
-        Product.setOnClickListener{
-            setfragment(AdminProductFragment())
-        }
+        val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
+        startActivityForResult(connectIntent, 20)
 
-        damage.setOnClickListener{
-            setfragment(AdminRepairListFragment())
-        }
-
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+//        recyclerView.layoutManager = lLayout
+        repairlist= repairporductDao.getAll() as ArrayList<RepairProduct>
+        Log.e(TAG,"repairlistttt " + repairlist.size )
+        repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@AdminRepairListFragment )
+        recyclerView.adapter = repairadapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        try {
+        try{
             if (requestCode == 20 && resultCode == Activity.RESULT_OK) {
                 val bundle = data!!.extras
                 val pcode = bundle!!.getString(StringsValue.param)
                 Log.e("TAG", "onActivityResult: " + pcode!!)
-
                 if (pcode == null) {
                     Toast.makeText(activity,"Cancel", Toast.LENGTH_SHORT).show()
 
@@ -105,6 +106,14 @@ class AdminHomeFragment: Fragment(){
 
 
                         buttonOk.setOnClickListener { v ->
+                            repairlist.add(
+                                RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
+                                    commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(
+                                        Constants.timeformat12),"")
+                            )
+                            Log.e("TAG", " doctorregister  " + repairlist.size)
+                            repairporductDao.insert(repairlist)
+//                        Log.e(TAG,"insertdata " + repairporductDao.getAll().size)
                             confirmDialog.dismiss()
 
 
@@ -113,17 +122,16 @@ class AdminHomeFragment: Fragment(){
                             confirmDialog.dismiss()
                         }
 
+
+
                     }
                 }
             }
-        }
-        catch (e: Exception){
-
-            Log.e("TAG", " try_catch  " + e.localizedMessage)
+        }catch (e: Exception){
+            Log.e("TAG", " try " + e.localizedMessage)
         }
 
     }
-
 
     private fun setfragment(_fragment: Fragment) {
         val fm = fragmentManager
@@ -131,5 +139,12 @@ class AdminHomeFragment: Fragment(){
         fragmentTransaction.replace(R.id.frameLayout, _fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    override fun onClickButton(position: Int, list: RepairProduct, type: String) {
+
+    }
+
+    override fun onClickCheckOut(list: RepairProduct) {
     }
 }
