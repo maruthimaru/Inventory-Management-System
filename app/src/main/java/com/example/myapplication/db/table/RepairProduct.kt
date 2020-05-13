@@ -25,6 +25,11 @@ class RepairProduct {
     lateinit var time:String;
     @ColumnInfo(name = "lastservicecdateTime")
     lateinit var lastservicecdateTime:String;
+    @ColumnInfo(name = "employeeid")
+    lateinit var employeeid:String;
+    @ColumnInfo(name = "reply_message")
+    lateinit var reply_message:String;
+
 
     constructor(
         pName: String,
@@ -32,7 +37,9 @@ class RepairProduct {
         image: String,
         date: String,
         time: String,
-        lastservicecdateTime: String
+        lastservicecdateTime: String,
+        employeeid: String,
+        reply_message: String
     ) {
         this.pName = pName
         this.pCode = pCode
@@ -40,5 +47,7 @@ class RepairProduct {
         this.date = date
         this.time = time
         this.lastservicecdateTime = lastservicecdateTime
+        this.employeeid=employeeid
+        this.reply_message=reply_message
     }
 }

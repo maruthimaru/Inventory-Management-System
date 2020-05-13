@@ -11,7 +11,7 @@ import com.example.myapplication.db.dao.RepairProductDao
 import com.example.myapplication.db.table.*
 
 @Database(
-        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class], version = 1, exportSchema = false)
+        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class], version = 3, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
 

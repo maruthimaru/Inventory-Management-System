@@ -19,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.Repair_ProductAdapter
 import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.dao.RepairProductDao
+import com.example.myapplication.db.table.Login
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
@@ -35,6 +37,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
     private val TAG: String= RepairListFragment::class.java.simpleName
     internal var list=ArrayList<ProductDetails>()
     internal var repairlist=ArrayList<RepairProduct>()
+    internal var listlogin=ArrayList<Login>()
     internal lateinit var view: View
     internal lateinit var recyclerView: RecyclerView
     lateinit var repairadapter: Repair_ProductAdapter
@@ -45,6 +48,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
     lateinit var repairporductDao:RepairProductDao
+    lateinit var empLoginDao: LoginDao
     internal lateinit var commonMethods: CommonMethods
 
     override fun onCreateView(
@@ -64,6 +68,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
         repairporductDao=appDatabase.repairProductDao()
+        empLoginDao=appDatabase.loginDao()
 
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
@@ -73,7 +78,8 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         Log.e(TAG,"repairlistttt " + repairlist.size )
         repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
         recyclerView.adapter = repairadapter
-
+        empLoginDao.getemp_id()
+        //Log.e(TAG,"getemp_id " + empLoginDao.getemp_id())
 
         fab.setOnClickListener{
 
@@ -125,9 +131,11 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
                         prod_date.setText( productdetails[0].date)
 
 
+
                         buttonOk.setOnClickListener { v ->
                             repairlist.add(RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
-                                commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(Constants.timeformat12),""))
+                                commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(Constants.timeformat12),"",empLoginDao.getemp_id(),
+                                ""))
                             Log.e("TAG", " doctorregister  " + repairlist.size)
                             repairporductDao.insert(repairlist)
 //                        Log.e(TAG,"insertdata " + repairporductDao.getAll().size)
