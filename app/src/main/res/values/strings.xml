@@ -12,4 +12,5 @@
     <string name="repair">Repair</string>
     <string name="cancel">cancel</string>
     <string name="InvalidQRcode">Invalid QRcode</string>
+    <string name="sureDelete">SureDelete</string>
 </resources>

@@ -30,6 +30,7 @@ class Constants {
         val CompanyName:String="name"
         val Employeeid:String="employeeid"
         val checkin:String="CheckIn"
+        var pcode:String=""
         val checkout:String="CheckOut"
         var personORtrans = ""
         val checkinstatus:Boolean=false
