@@ -22,8 +22,9 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
 
     private val TAG = "suplierview"
     interface ListAdapterListener { // create an interface
-        fun onClickButton(position: Int, list: RepairProduct,type:String)  // create callback function
-        fun onClickCheckOut(list: RepairProduct)
+        fun onClickButton(position: Int, repairProduct: RepairProduct)  // create callback function
+        fun onClickCheckOut(repairProduct: RepairProduct)
+        fun onClickButtonInfo(position: Int, repairProduct: RepairProduct)
     }
 
 
@@ -34,7 +35,8 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         internal lateinit var pro_date:TextView
         internal lateinit var pro_time:TextView
         internal lateinit var product_image: ImageView
-        internal lateinit var layout: CardView
+        internal lateinit var cardview: CardView
+        internal lateinit var message:ImageView
 
         init {
             this.pname=view.findViewById(R.id.pname)
@@ -43,7 +45,8 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
             this.pro_date=view.findViewById(R.id.pro_date)
             this.pro_time = view.findViewById(R.id.pro_time)
             this.product_image=view.findViewById(R.id.product_image)
-            this.layout=view.findViewById(R.id.cardview)
+            this.message=view.findViewById(R.id.message)
+            this.cardview=view.findViewById(R.id.cardview)
         }
     }
 
@@ -69,12 +72,16 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
 
 
 
-        holder.layout.setOnClickListener { v ->
+        holder.cardview.setOnClickListener { v ->
             if (position != -1 ) {
                 Log.e(TAG, "POSITION: $position")
                 // use callback function to Return the Position
+                mListener.onClickButton(position,model)
 
             }
+        }
+        holder.message.setOnClickListener {
+            mListener.onClickButtonInfo(position, model)
         }
 
 

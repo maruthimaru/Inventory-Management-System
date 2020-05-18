@@ -118,6 +118,14 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/size_12dp"
             android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/message"
+            style="@style/TextViewww"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_info"
+            android:layout_marginRight="@dimen/size_20dp"
+            android:visibility="visible"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 

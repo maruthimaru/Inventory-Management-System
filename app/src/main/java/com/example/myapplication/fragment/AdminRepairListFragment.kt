@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -75,10 +77,44 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
         fragmentTransaction.commit()
     }
 
-    override fun onClickButton(position: Int, list: RepairProduct, type: String) {
+    override fun onClickButton(position: Int, repairProduct: RepairProduct) {
+
 
     }
 
-    override fun onClickCheckOut(list: RepairProduct) {
+    override fun onClickCheckOut(repairProduct: RepairProduct) {
     }
+
+    override fun onClickButtonInfo(position: Int, repairProduct: RepairProduct) {
+        addNewdialog(repairProduct)
+    }
+    fun addNewdialog(repairProduct: RepairProduct){
+        val builder: Dialog = Dialog(activity!!)
+        val inflater = layoutInflater
+        builder.setTitle("With RatingBar")
+        val dialogLayout: View = inflater.inflate(R.layout.fragment_admin_alert_dialog, null)
+        builder.setContentView(dialogLayout)
+        val message_edittxt = builder.findViewById<EditText>(R.id.message_edittxt)
+        val update_txt = builder.findViewById<TextView>(R.id.update_txt)
+
+        update_txt.setOnClickListener {
+            val text=message_edittxt.toString()
+            if (text.length>0){
+                message_edittxt.setError(null)
+                repairporductDao.update(text, repairProduct.id)
+                Toast.makeText(activity,"Update Successfull",Toast.LENGTH_SHORT).show()
+                builder.dismiss()
+            }else{
+
+                message_edittxt.requestFocus()
+                message_edittxt.error= "Please enter the message"
+            }
+
+            Log.e(TAG,"repair " + repairProduct.id )
+        }
+
+
+        builder.show()
+    }
+
 }

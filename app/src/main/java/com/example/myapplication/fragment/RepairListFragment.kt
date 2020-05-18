@@ -119,10 +119,16 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         fragmentTransaction.commit()
     }
 
-    override fun onClickButton(position: Int, list: RepairProduct, type: String) {
+    override fun onClickButton(position: Int, repairProduct: RepairProduct) {
 
     }
 
-    override fun onClickCheckOut(list: RepairProduct) {
+    override fun onClickCheckOut(repairProduct: RepairProduct) {
     }
+
+    override fun onClickButtonInfo(position: Int, repairProduct: RepairProduct) {
+
+    }
+
+
 }
