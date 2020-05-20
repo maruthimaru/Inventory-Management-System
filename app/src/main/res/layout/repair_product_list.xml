@@ -128,7 +128,9 @@
             android:layout_alignParentRight="true" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_image"
             android:layout_width="match_parent"
+            android:layout_below="@+id/pro_time"
             android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>

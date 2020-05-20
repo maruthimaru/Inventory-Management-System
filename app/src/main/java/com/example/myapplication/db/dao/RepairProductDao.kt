@@ -21,4 +21,9 @@ interface RepairProductDao {
 
     @Query("UPDATE repair_product SET reply_message = :reply_message WHERE id = :uid")
     fun update(reply_message: String, uid: Int?)
+
+ @Query("select * from repair_product where reply_message!= '' and employeeid=:emp_id ")
+ fun updatelist(emp_id: String):List<RepairProduct>
+
+
 }

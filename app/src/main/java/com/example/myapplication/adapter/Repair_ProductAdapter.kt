@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.db.table.ProductDetails
@@ -38,6 +39,7 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         internal lateinit var product_image: ImageView
         internal lateinit var cardview: CardView
         internal lateinit var message:ImageView
+        internal lateinit var imagerecyclerView: RecyclerView
 
         init {
             this.pname=view.findViewById(R.id.pname)
@@ -48,6 +50,7 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
             this.product_image=view.findViewById(R.id.product_image)
             this.message=view.findViewById(R.id.message)
             this.cardview=view.findViewById(R.id.cardview)
+            this.imagerecyclerView=view.findViewById(R.id.recycle_image)
         }
     }
 
@@ -85,6 +88,16 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         holder.message.setOnClickListener {
             mListener.onClickButtonInfo(position, model)
         }
+
+        model.imagelist
+        Log.e(TAG,"imagesize " + model.imagelist!!.size)
+        val imageAdapter:ImageAdapter
+        imageAdapter= ImageAdapter(context,model.imagelist!!)
+        val layoutManager = LinearLayoutManager(context)
+        holder.imagerecyclerView.layoutManager = layoutManager
+        holder.imagerecyclerView.setHasFixedSize(true)
+
+       holder.imagerecyclerView .adapter = imageAdapter
 
 
     }
