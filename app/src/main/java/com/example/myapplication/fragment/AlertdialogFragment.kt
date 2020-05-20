@@ -68,6 +68,7 @@ class AlertdialogFragment:Fragment(){
 
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
+        bitmapUtility = BitmapUtility(activity!!)
         productDao=appDatabase.productDetailDao()
         repairporductDao=appDatabase.repairProductDao()
         empLoginDao=appDatabase.loginDao()
@@ -117,7 +118,7 @@ class AlertdialogFragment:Fragment(){
             if (actualImage != null) {
                 val photoURI: Uri
                 if (Build.VERSION.SDK_INT > 19) {
-                    photoURI = FileProvider.getUriForFile(activity!!, "com.example.medicalmanagement.fileprovider", actualImage!!)
+                    photoURI = FileProvider.getUriForFile(activity!!, "com.example.myapplication.fileprovider", actualImage!!)
                 } else {
                     photoURI = Uri.fromFile(actualImage)
                 }
@@ -153,7 +154,7 @@ class AlertdialogFragment:Fragment(){
                     RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
                         commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(
                             Constants.timeformat12),"",empLoginDao.getemp_id(),
-                        ""))
+                        "",imagelist))
                 Log.e("TAG", " doctorregister  " + repairlist.size)
                 repairporductDao.insert(repairlist)
                 Constants.pcode=""

@@ -69,16 +69,17 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         productDao=appDatabase.productDetailDao()
         repairporductDao=appDatabase.repairProductDao()
         empLoginDao=appDatabase.loginDao()
+        empLoginDao.getemp_id()
 
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = lLayout
-        repairlist= repairporductDao.getAll() as ArrayList<RepairProduct>
+        repairlist= repairporductDao.getempid(empLoginDao.getemp_id()) as ArrayList<RepairProduct>
         Log.e(TAG,"repairlistttt " + repairlist.size )
         repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
         recyclerView.adapter = repairadapter
-        empLoginDao.getemp_id()
+
         //Log.e(TAG,"getemp_id " + empLoginDao.getemp_id())
 
         fab.setOnClickListener{

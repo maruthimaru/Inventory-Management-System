@@ -4,6 +4,10 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.myapplication.db.dao.ImageRegDataConversion
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = "repair_product")
@@ -29,6 +33,10 @@ class RepairProduct {
     lateinit var employeeid:String;
     @ColumnInfo(name = "reply_message")
     lateinit var reply_message:String;
+    @TypeConverters(ImageRegDataConversion::class)
+    @SerializedName("imagelist")
+    @Expose
+    var imagelist : List<String>?=null
 
 
     constructor(
@@ -39,7 +47,8 @@ class RepairProduct {
         time: String,
         lastservicecdateTime: String,
         employeeid: String,
-        reply_message: String
+        reply_message: String,
+        imagelist: List<String>
     ) {
         this.pName = pName
         this.pCode = pCode
@@ -49,5 +58,6 @@ class RepairProduct {
         this.lastservicecdateTime = lastservicecdateTime
         this.employeeid=employeeid
         this.reply_message=reply_message
+        this.imagelist = imagelist
     }
 }

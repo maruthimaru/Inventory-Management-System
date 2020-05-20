@@ -13,6 +13,7 @@ import com.example.myapplication.R
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
+import kotlinx.android.synthetic.main.activity_login.view.*
 import java.util.*
 
 class Repair_ProductAdapter(private val context: Context, private val list: MutableList<RepairProduct>, private val mListener: ListAdapterListener) : RecyclerView.Adapter<Repair_ProductAdapter.MyViewHolder>() {
@@ -69,6 +70,7 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         holder.pcode.text=model.pCode
         holder.pro_date.text=model.date
         holder.pro_time.text=model.time
+
 
 
 

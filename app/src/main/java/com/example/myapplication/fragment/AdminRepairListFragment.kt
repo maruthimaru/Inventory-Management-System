@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.Repair_ProductAdapter
 import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.dao.RepairProductDao
 import com.example.myapplication.db.table.ProductDetails
@@ -38,6 +39,7 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
     internal lateinit var recyclerView: RecyclerView
     lateinit var repairadapter: Repair_ProductAdapter
     lateinit var appDatabase: AppDatabase
+    lateinit var empLoginDao: LoginDao
     lateinit var productDao: ProductDetailsDao
     lateinit var repairporductDao: RepairProductDao
     internal lateinit var commonMethods: CommonMethods
@@ -52,7 +54,9 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
+        empLoginDao=appDatabase.loginDao()
         repairporductDao=appDatabase.repairProductDao()
+        empLoginDao.getemp_id()
 
 //        val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
 //        startActivityForResult(connectIntent, 20)
