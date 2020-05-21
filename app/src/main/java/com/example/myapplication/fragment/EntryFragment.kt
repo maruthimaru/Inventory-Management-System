@@ -48,6 +48,10 @@ class EntryFragment:Fragment(){
             startActivityForResult(connectIntent, 20)
         }
 
+        update_btn.setOnClickListener{
+            setfragment(UpdateFragment())
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

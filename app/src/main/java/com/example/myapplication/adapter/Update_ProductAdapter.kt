@@ -17,7 +17,7 @@ import com.example.myapplication.helper.CommonMethods
 import kotlinx.android.synthetic.main.activity_login.view.*
 import java.util.*
 
-class Repair_ProductAdapter(private val context: Context, private val list: MutableList<RepairProduct>, private val mListener: ListAdapterListener) : RecyclerView.Adapter<Repair_ProductAdapter.MyViewHolder>() {
+class Update_ProductAdapter(private val context: Context, private val list: MutableList<RepairProduct>, private val mListener: ListAdapterListener) : RecyclerView.Adapter<Update_ProductAdapter.MyViewHolder>() {
     private val tempItems: List<RepairProduct>
 
     private var commonMethods: CommonMethods? = null
@@ -87,6 +87,36 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         }
         holder.message.setOnClickListener {
             mListener.onClickButtonInfo(position, model)
+
+
+                val builder: Dialog = Dialog(context!!)
+                val inflater = LayoutInflater.from(context)
+                builder.setTitle("With RatingBar")
+                val dialogLayout: View = inflater.inflate(R.layout.fragment_update_alert_dialog, null)
+                builder.setContentView(dialogLayout)
+                val message_edittxt = builder.findViewById<TextView>(R.id.message_edittxt)
+                val text=message_edittxt.text.toString()
+                message_edittxt.setText(model.reply_message)
+
+//                update_txt.setOnClickListener {
+//
+//                    if (text.length>0){
+//                        message_edittxt.setError(null)
+//                        repairporductDao.update(text, repairProduct.id)
+//                        Toast.makeText(activity,"Update Successfull", Toast.LENGTH_SHORT).show()
+//
+//                    }else{
+//
+//                        message_edittxt.requestFocus()
+//                        message_edittxt.error= "Please enter the message"
+//                    }
+//
+//                    Log.e(TAG,"repair " + repairProduct.id )
+//                }
+                builder.dismiss()
+
+                builder.show()
+
 
         }
 
