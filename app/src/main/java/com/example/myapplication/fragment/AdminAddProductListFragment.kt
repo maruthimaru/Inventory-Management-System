@@ -1,7 +1,8 @@
 package com.example.myapplication.fragment
 
+import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.media.Image
 import android.os.Bundle
@@ -21,6 +22,9 @@ import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
 import com.example.myapplication.helper.Constants
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 
 class AdminAddProductListFragment:Fragment(){
     private val TAG: String= AdminAddProductListFragment::class.java.simpleName
@@ -136,13 +140,80 @@ class AdminAddProductListFragment:Fragment(){
             Toast.makeText(activity,"Product register successfull",Toast.LENGTH_SHORT).show()
             productDetailsDao.insert(list)
             Log.e(TAG,"insertdata " + productDetailsDao.getAll().size)
+            setfragment(AdminProductFragment())
 
         }
 
 
 
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            0 -> {
+                if (resultCode == Activity.RESULT_OK && requestCode == 0) {
 
+                    val bp = data!!.extras!!.get("data") as Bitmap
+                    val resized = Bitmap.createScaledBitmap(bp, 100, 100, true)
+                    phtobitmap=resized
+                    val conv_bm = getRoundedRectBitmap(resized, 100)
+                    companyImg.setImageBitmap(null)
+                    companyImg.setImageBitmap(conv_bm)
+                    Log.e("TAG", "select event for photo=$resultCode")
+                    //customerImg=getBytes(conv_bm);
+                }
+//                Log.e("TAG", "select event for photo=$resultCode")
+            }
+            1 -> {
+                if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+
+
+                    var bm: Bitmap? = null
+                    if (data != null) {
+                        try {
+                            bm = MediaStore.Images.Media.getBitmap(context!!.contentResolver, data.data)
+                            //                            int size=Math.min(bm.getWidth(),bm.getHeight());
+                            //                            int x=(bm.getWidth()-size)/2;
+                            //                            int y=(bm.getHeight()-size)/2;
+                            //                            Bitmap bitmap=Bitmap.createBitmap(bm,x,y,size,size);
+                            //                            Log.e("bitmap_Resul "," = "+ bitmap);
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+
+                    }
+                    val resized = Bitmap.createScaledBitmap(bm!!, 100, 100, true)
+                    val conv_bm = getRoundedRectBitmap(resized, 100)
+                    companyImg.setImageBitmap(conv_bm)
+                    Log.e("TAG", "select event for photo=$resultCode")
+                }
+//                Log.e("TAG", "select event for photo=$resultCode")
+            }
+        }
+    }
+
+    private fun getRoundedRectBitmap(bp: Bitmap, i: Int): Bitmap? {
+
+        var result: Bitmap? = null
+        try {
+            result = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(result!!)
+            val color = -0xbdbdbe
+            val paint = Paint()
+            val rect = Rect(0, 0, 200, 200)
+            paint.isAntiAlias = true
+            canvas.drawARGB(0, 0, 0, 0)
+            paint.color = color
+            canvas.drawCircle(50f, 50f, 50f, paint)
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+            canvas.drawBitmap(bp, rect, rect, paint)
+
+        } catch (e: NullPointerException) {
+        } catch (o: OutOfMemoryError) {
+        }
+        return result
+    }
     private fun setfragment(_fragment: Fragment) {
         val fm = fragmentManager
         val fragmentTransaction = fm!!.beginTransaction()
