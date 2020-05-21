@@ -23,5 +23,15 @@ class ProductDetails {
     @ColumnInfo(name = "time")
     lateinit var time:String;
 
-
+    constructor(pName: String, pCode: String, image: String, date: String, time: String) {
+        this.pName = pName
+        this.pCode = pCode
+        this.image = image
+        this.date = date
+        this.time = time
+    }
 }
+
+
+
+

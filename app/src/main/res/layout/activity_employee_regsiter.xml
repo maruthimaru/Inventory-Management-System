@@ -103,8 +103,8 @@
                 android:padding="@dimen/size_3dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/size_14dp"
-
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:text="Enter Type" />
 
             <EditText
@@ -112,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="@integer/int_200"
+                android:visibility="gone"
                 android:textSize="@dimen/size_14dp"
                 android:padding="@dimen/size_3dp"
                 android:background="@drawable/bordergray"

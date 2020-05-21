@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:layout_centerVertical="true"
+    android:background="@color/white">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/size_8dp">
+
+        <ImageView
+            android:id="@+id/companyImg"
+            android:layout_width="@dimen/size_80dp"
+            android:layout_height="@dimen/size_80dp"
+            android:layout_centerHorizontal="true"
+            android:minWidth="@dimen/size_80dp"
+            android:minHeight="@dimen/size_80dp"
+            app:srcCompat="@drawable/company_image"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/companyImg"
+            android:layout_alignBottom="@+id/companyImg"
+            android:layout_marginRight="-5dp"
+            android:layout_marginBottom="-6dp"
+            android:background="@drawable/bg_circle1"
+            app:srcCompat="@drawable/ic_photo_camera_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/imageButton2"
+            tools:ignore="UnknownId">
+
+            <TextView
+                android:id="@+id/companytextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/size_20dp"
+                android:text="Enter product name" />
+            <EditText
+                android:id="@+id/product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_14dp"
+                android:maxLength="@integer/int_150"
+                android:padding="@dimen/size_3dp"
+                android:background="@drawable/bordergray"
+                android:inputType="textPersonName"
+                android:hint="Enter product name" />
+            <TextView
+                android:id="@+id/doctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:textStyle="bold"
+                android:text="Enter product code" />
+            <EditText
+                android:id="@+id/product_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_14dp"
+                android:padding="@dimen/size_3dp"
+                android:maxLength="@integer/int_10"
+                android:background="@drawable/bordergray"
+                android:inputType="number"
+                android:hint="Enter product code" />
+
+
+            <TextView
+                android:id="@+id/datetitext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:visibility="visible"
+                android:textStyle="bold"
+                android:text="Enter Date" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@drawable/bordergray"
+                android:layout_marginLeft="@dimen/size_8dp"
+                android:layout_marginRight="@dimen/size_8dp"
+                android:layout_toLeftOf="@+id/dmidborder">
+
+                <TextView
+                    android:id="@+id/dates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/da"
+                    android:background="@android:color/transparent"
+                    android:maxLength="@integer/int_10"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    android:text="00/00/00"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/size_14dp" />
+
+                <ImageView
+                    android:id="@+id/date_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/da"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size_8dp"/>
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/titext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/size_14dp"
+                android:textStyle="bold"
+                android:text="Enter Time" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bordergray"
+                android:layout_marginLeft="@dimen/size_8dp"
+                android:layout_marginRight="@dimen/size_8dp"
+                android:layout_toRightOf="@+id/dmidborder"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/ti"
+                    android:background="@android:color/transparent"
+                    android:hint="00:00"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/hint_color"
+                    android:textSize="@dimen/size_14dp" />
+
+                <ImageView
+                    android:id="@+id/time_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ti"
+                    android:src="@drawable/ic_clock"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size_8dp" />
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="@dimen/size_30dp"
+                android:paddingLeft="@dimen/size_10dp"
+                android:paddingRight="@dimen/size_10dp">
+
+                <Button
+                    android:id="@+id/submit_btn"
+                    android:layout_width="@dimen/size_100dp"
+                    android:layout_height="@dimen/size_40dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/buttonboxshapeandbackg1"
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_14dp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

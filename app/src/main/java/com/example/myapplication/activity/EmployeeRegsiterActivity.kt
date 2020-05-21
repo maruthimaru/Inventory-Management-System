@@ -92,7 +92,7 @@ class EmployeeRegsiterActivity : AppCompatActivity() {
             password.requestFocus()
             password.error="Please enter password"
         }else{
-         list.add(EmpReg(Empname,Age,Empnum,Empid,Pass,Type,Date,Time))
+         list.add(EmpReg(Empname,Age,Empnum,Empid,Pass,"",Date,Time))
             Log.e("TAG", " doctorregister  " + list.size)
             Toast.makeText(this,"Register successfully", Toast.LENGTH_SHORT).show()
             empRegisterDao.insert(list)
