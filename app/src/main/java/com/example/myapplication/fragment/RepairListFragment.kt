@@ -75,10 +75,16 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
 //        recyclerView.layoutManager = lLayout
-        repairlist= repairporductDao.getempid(empLoginDao.getemp_id()) as ArrayList<RepairProduct>
-        Log.e(TAG,"repairlistttt " + repairlist.size )
-        repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
-        recyclerView.adapter = repairadapter
+        Log.e(TAG,"repairlistttt " + empLoginDao.getemp_id() )
+        try {
+            repairlist= repairporductDao.getempid(empLoginDao.getemp_id()) as ArrayList<RepairProduct>
+            Log.e(TAG,"repairlistttt " + repairlist.size )
+            repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
+            recyclerView.adapter = repairadapter
+
+        }catch (e : Exception){
+Log.e(TAG,"exception" +e.localizedMessage)
+        }
 
         //Log.e(TAG,"getemp_id " + empLoginDao.getemp_id())
 
@@ -101,9 +107,12 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
                 } else {
                     var productdetails = productDao.getid(pcode)
                     Constants.pcode=pcode
-                    setfragment(AlertdialogFragment())
-                    Log.e("TAG", " product_code  " + productdetails.size)
-
+                    if(productdetails.size>0) {
+                        setfragment(AlertdialogFragment())
+                        Log.e("TAG", " product_code  " + productdetails.size)
+                    }else{
+                        Toast.makeText(activity!!,"Invalid QRCode",Toast.LENGTH_SHORT).show()
+                    }
 
                     }
                 }

@@ -11,6 +11,7 @@
     app:cardUseCompatPadding="true"
     card_view:cardCornerRadius="@dimen/size_2dp"
     card_view:cardElevation="@dimen/size_2dp"
+    android:layout_marginTop="@dimen/size_10dp"
     app:ignore="NamespaceTypo">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

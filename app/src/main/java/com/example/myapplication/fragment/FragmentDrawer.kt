@@ -81,14 +81,14 @@ class FragmentDrawer : Fragment() {
                                 Log.e("onClick"," position "+i)
                                 drawerListener!!.onDrawerItemSelected(view,i)
                                 mDrawerLayout!!.closeDrawer(containerView)
-                                when(i){
-                                    0->{
-                                       // setfragment(AdminHomeFragment())
-                                    }
-                                    1->{
-                                        commonClass.Logoutscreen()
-                                    }
-                                }
+//                                when(i){
+//                                    0->{
+//                                        setfragment(AdminHomeFragment())
+//                                    }
+//                                    1->{
+//                                        commonClass.Logoutscreen()
+//                                    }
+//                                }
                             }
                             override fun onLongClick(view: View?, i: Int) {
 

@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.activity.LoginActivity
+import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.helper.pojo.NavDrawerItem
 import com.example.myapplication.utils.StringsValue
 import java.io.ByteArrayOutputStream
@@ -115,7 +116,7 @@ class CommonMethods{
         picker!!.show()
         val minDate = getDate(Constants.dateformat1, getdate(Constants.ddmmyyyy))
         Log.e(TAG, "DATE VALIDATION " + minDate)
-        picker!!.datePicker.maxDate = minDate
+        picker!!.datePicker.minDate = minDate
     }
     //get curent date
     fun date(input: String): String {
@@ -219,10 +220,11 @@ class CommonMethods{
         private var Date: String? = null
     }
 
-    fun Logoutscreen() {
+    fun Logoutscreen(empLoginDao: LoginDao) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage("Are you sure want to logout?")
         builder.setPositiveButton("Yes") { dialog, id ->
+            empLoginDao.deleteAll()
             intentFinish(context, LoginActivity::class.java)
         }
         builder.setNegativeButton("No") { dialog, id -> dialog.dismiss() }

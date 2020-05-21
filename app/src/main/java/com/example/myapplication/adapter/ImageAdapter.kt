@@ -55,8 +55,9 @@ class ImageAdapter(private val context: Context, private val list: List<String>)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val model = this.list[position]
-        Log.e(TAG,"model " + model)
-        val bmp =bitmapUtility.base64toBitmap(model)
+        Log.e(TAG,"model " + model.toByteArray())
+//        val bmp =bitmapUtility.base64toBitmap(model)
+        val bmp =bitmapUtility.getImage(model.toByteArray())
         Log.e(TAG,"bmp " + bmp)
         holder.img.setImageBitmap(bmp)
 

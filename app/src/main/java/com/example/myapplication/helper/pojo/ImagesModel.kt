@@ -5,6 +5,7 @@ import java.io.Serializable
 
 class ImagesModel : Serializable {
     lateinit var bitmap: Bitmap
+    lateinit var byteArray: ByteArray
     var imageList: String? = null
     var imagePath: String? = null
     var entriesItem: String? = null

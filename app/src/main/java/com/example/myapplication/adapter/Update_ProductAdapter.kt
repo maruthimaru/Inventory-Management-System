@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
+import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
 import kotlinx.android.synthetic.main.activity_login.view.*
 import java.util.*
@@ -21,6 +22,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
     private val tempItems: List<RepairProduct>
 
     private var commonMethods: CommonMethods? = null
+    private var bitmapUtility: BitmapUtility?= null
 
     private val TAG = "suplierview"
     interface ListAdapterListener { // create an interface
@@ -59,6 +61,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
         this.tempItems = ArrayList(list)
 
         this.commonMethods= CommonMethods(context)
+        bitmapUtility = BitmapUtility(context)
 
     }
 
@@ -73,7 +76,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
         holder.pcode.text=model.pCode
         holder.pro_date.text=model.date
         holder.pro_time.text=model.time
-
+        holder.product_image.setImageBitmap(bitmapUtility!!.base64toBitmap(model.image))
 
 
 
@@ -124,7 +127,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
         Log.e(TAG,"imagesize " + model.imagelist!!.size)
         val imageAdapter:ImageAdapter
         imageAdapter= ImageAdapter(context,model.imagelist!!)
-        val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
+        val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.imagerecyclerView.layoutManager = layoutManager
         holder.imagerecyclerView.setHasFixedSize(true)
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -51,6 +52,7 @@ class AlertdialogFragment:Fragment(){
     internal var repairlist= ArrayList<RepairProduct>()
     private val imgList = ArrayList<ImagesModel>()
     private val imagelist = ArrayList<String>()
+    private val imagelistByteArray = ArrayList<ByteArray>()
     private val imagepath = ArrayList<String>()
     private val Document = 18
     private var actualImage: File? = null
@@ -95,6 +97,7 @@ class AlertdialogFragment:Fragment(){
                 builder.setPositiveButton("OK") { dialog, id ->
                     imgList.removeAt(position)
                     imagelist.removeAt(position)
+                    imagelistByteArray.removeAt(position)
                     val path = imagepath.get(position)
                     val fdelete = File(path)
                     if (fdelete.exists()) {
@@ -130,10 +133,12 @@ class AlertdialogFragment:Fragment(){
         val producttime = view.findViewById<TextView>(R.id.product_time)
         val productname = view.findViewById<TextView>(R.id.product_name)
         val productcode = view.findViewById<TextView>(R.id.product_code)
-        val productimage = view.findViewById<TextView>(R.id.product_image)
+        val productimage = view.findViewById<ImageView>(R.id.product_image)
         val prod_date = view.findViewById<TextView>(R.id.product_date)
         val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
         val buttonOk = view.findViewById<Button>(R.id.buttonOk)
+        val next_s_date = view.findViewById<TextView>(R.id.next_s_date)
+        val last_s_date = view.findViewById<TextView>(R.id.last_s_date)
 
         try {
             var productdetails = productDao.getid(Constants.pcode)
@@ -142,8 +147,10 @@ class AlertdialogFragment:Fragment(){
             producttime.setText( productdetails[0].time)
             productname.setText( productdetails[0].pName)
             productcode.setText( productdetails[0].pCode)
-            productimage.setText( productdetails[0].image)
+            productimage.setImageBitmap( bitmapUtility.base64toBitmap(productdetails[0].image))
             prod_date.setText( productdetails[0].date)
+            next_s_date.setText( "Next Service : "+productdetails[0].nextServiceDate)
+            last_s_date.setText( "Last Service : "+productdetails[0].lastServiceDate)
             empLoginDao.getemp_id()
             Log.e(TAG,"getemp_id " + empLoginDao.getemp_id())
 
@@ -337,17 +344,28 @@ class AlertdialogFragment:Fragment(){
         } catch (e3: FileNotFoundException) {
             e = e3
             e.printStackTrace()
-            imagelist.add(bitmapUtility.getStringImage(bitmap))
+//            imagelist.add(bitmapUtility.getStringImage(bitmap))
+            imagelist.add(bitmapUtility.getBytes(bitmap).toString())
+            imagelistByteArray.add(bitmapUtility.getBytes(bitmap))
             imagesModel = ImagesModel()
             imagesModel.bitmap = bitmap
+            imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
+            imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
             imgList.add(imagesModel)
             uploadimageAdapter = UploadimageAdapter(imgList, activity!!)
             recyclerView_doc_img.adapter = uploadimageAdapter
         }
 
-        imagelist.add(bitmapUtility.getStringImage(bitmap))
+        Log.e(TAG,"image byte array")
+        System.out.println(bitmapUtility.getBytes(bitmap))
+        Log.e(TAG,"image byte array")
+//        imagelist.add(bitmapUtility.getStringImage(bitmap))
+        imagelist.add(bitmapUtility.getBytes(bitmap).toString())
+        imagelistByteArray.add(bitmapUtility.getBytes(bitmap))
         imagesModel = ImagesModel()
         imagesModel.bitmap = bitmap
+        imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
+        imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
         imgList.add(imagesModel)
         //        Log.e(TAG, "setCompressedImage: Image List Size : "+list.size() );
         if (imgList.size > 0) {

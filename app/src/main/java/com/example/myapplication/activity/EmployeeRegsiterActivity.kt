@@ -54,8 +54,8 @@ class EmployeeRegsiterActivity : AppCompatActivity() {
 
         dates.text = commonMethods.date(Constants.dateformat1)
         time.text = commonMethods.date(Constants.dateformat2)
-        date_image.setOnClickListener { commonMethods.clickDate(dates) }
-        time_image.setOnClickListener { commonMethods.clickTime(time) }
+//        date_image.setOnClickListener { commonMethods.clickDate(dates) }
+//        time_image.setOnClickListener { commonMethods.clickTime(time) }
     }
     private fun askAppointment(){
         val Empname=empname.text.toString()
@@ -78,10 +78,12 @@ class EmployeeRegsiterActivity : AppCompatActivity() {
         }else if (Age.isNullOrEmpty()){
             age.requestFocus()
             age.error="Please enter age"
-        }else if (Type.isNullOrEmpty()){
-            type.requestFocus()
-            type.error="Please enter type"
-        }else if (Date.isNullOrEmpty()){
+        }
+//        else if (Type.isNullOrEmpty()){
+//            type.requestFocus()
+//            type.error="Please enter type"
+//        }
+        else if (Date.isNullOrEmpty()){
             dates.requestFocus()
             dates.error="please enter date"
         }else if (Time.isNullOrEmpty()){

@@ -22,13 +22,19 @@ class ProductDetails {
     lateinit var date:String;
     @ColumnInfo(name = "time")
     lateinit var time:String;
+    @ColumnInfo(name = "next_service_date")
+    lateinit var nextServiceDate:String;
+    @ColumnInfo(name = "last_service_date")
+    lateinit var lastServiceDate:String;
 
-    constructor(pName: String, pCode: String, image: String, date: String, time: String) {
+    constructor(pName: String, pCode: String, image: String, date: String, time: String, nextServiceDate: String, lastServiceDate: String) {
         this.pName = pName
         this.pCode = pCode
         this.image = image
         this.date = date
         this.time = time
+        this.nextServiceDate = nextServiceDate
+        this.lastServiceDate = lastServiceDate
     }
 }
 

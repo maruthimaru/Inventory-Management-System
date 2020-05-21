@@ -20,4 +20,7 @@ interface ProductDetailsDao {
     @Query("select * from product_details where p_code = :p_code ")
     fun getid(p_code:String):List<ProductDetails>
 
+    @Query("UPDATE product_details SET next_service_date = :nextDate, last_service_date=:lastDate WHERE id = :uid")
+    fun update(nextDate: String,lastDate: String, uid: Int?)
+
 }

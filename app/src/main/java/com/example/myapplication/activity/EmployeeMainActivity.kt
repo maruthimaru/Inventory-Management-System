@@ -10,6 +10,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.fragment.EmployeeHomeFragment
 import com.example.myapplication.fragment.FragmentDrawer
 import com.example.myapplication.helper.CommonMethods
@@ -27,11 +29,12 @@ class EmployeeMainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerL
         var title = getString(R.string.app_name)
         when (position) {
             0 -> {
-
+                setfragment(EmployeeHomeFragment())
 
             }
             1 -> {
 //                setfragment(EmployeeProfileFragment())
+                commonClass.Logoutscreen(empLoginDao)
 
             }
             2 -> {
@@ -74,17 +77,24 @@ class EmployeeMainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerL
 //            }
         }
     }
+
+    private lateinit var commonClass: CommonMethods
     private var drawerFragment: FragmentDrawer? = null
     lateinit var mToolbar: Toolbar
     var customdialog: CommonMethods? = null
     private var drawerLayout: DrawerLayout? = null
     var fragmentDrawerView: View? = null
+    lateinit var empLoginDao: LoginDao
+    lateinit var appDatabase: AppDatabase
     internal var TAG = EmployeeMainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frame)
         customdialog = CommonMethods(this)
+        commonClass = CommonMethods(this)
+        appDatabase = AppDatabase.getDatabase(this)
+        empLoginDao=appDatabase.loginDao()
         mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)
         drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout

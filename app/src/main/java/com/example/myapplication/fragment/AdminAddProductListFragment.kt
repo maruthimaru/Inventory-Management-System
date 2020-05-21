@@ -112,7 +112,8 @@ class AdminAddProductListFragment:Fragment(){
     private fun askAppointment(){
         val pname=product_name.text.toString()
         val pcode=product_code.text.toString()
-        val Date=dates.text.toString()
+        val NextDate=dates.text.toString()
+        val Date=commonMethods.date(Constants.dateformat1)
         val Time=time.text.toString()
         var logo = ""
 
@@ -135,7 +136,7 @@ class AdminAddProductListFragment:Fragment(){
                 logo = commonMethods.getBaseImage(commonMethods.getBytes((companyImg.drawable as BitmapDrawable).bitmap))
             }
 
-            list.add(ProductDetails(pname,pcode,logo,Date,Time))
+            list.add(ProductDetails(pname,pcode,logo,Date,Time,NextDate,"Not yet"))
             Log.e("TAG", " productregister  " + list.size)
             Toast.makeText(activity,"Product register successfull",Toast.LENGTH_SHORT).show()
             productDetailsDao.insert(list)

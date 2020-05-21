@@ -100,7 +100,7 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
         builder.setContentView(dialogLayout)
         val message_edittxt = builder.findViewById<EditText>(R.id.message_edittxt)
         val update_txt = builder.findViewById<TextView>(R.id.update_txt)
-
+        message_edittxt.setText(repairProduct.reply_message)
         update_txt.setOnClickListener {
             val text=message_edittxt.text.toString()
             if (text.length>0){

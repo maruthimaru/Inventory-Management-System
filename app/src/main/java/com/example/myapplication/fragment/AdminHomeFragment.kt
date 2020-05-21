@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,7 +18,9 @@ import com.example.myapplication.R
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.table.ProductDetails
+import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
+import com.example.myapplication.helper.Constants
 import com.example.myapplication.utils.QRCodeScannerPortait
 import com.example.myapplication.utils.StringsValue
 import com.google.android.material.internal.ScrimInsetsFrameLayout
@@ -34,6 +37,7 @@ class AdminHomeFragment: Fragment(){
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
     internal lateinit var commonMethods: CommonMethods
+    lateinit var bitmapUtility: BitmapUtility
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,6 +51,7 @@ class AdminHomeFragment: Fragment(){
         damage=view.findViewById(R.id.damage)
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
+        bitmapUtility = BitmapUtility(activity!!)
         productDao=appDatabase.productDetailDao()
 
         damage_repair.setOnClickListener{
@@ -84,7 +89,7 @@ class AdminHomeFragment: Fragment(){
 
                         val alertDialog = androidx.appcompat.app.AlertDialog.Builder(activity!!)
                         val inflater = activity!!.layoutInflater
-                        val view = inflater.inflate(R.layout.alert_dialog, null)
+                        val view = inflater.inflate(R.layout.alert_dialog_update, null)
                         alertDialog.setView(view)
                         val confirmDialog = alertDialog.create()
                         confirmDialog.show()
@@ -92,20 +97,32 @@ class AdminHomeFragment: Fragment(){
                         val producttime = view.findViewById<TextView>(R.id.product_time)
                         val productname = view.findViewById<TextView>(R.id.product_name)
                         val productcode = view.findViewById<TextView>(R.id.product_code)
-                        val productimage = view.findViewById<TextView>(R.id.product_image)
+                        val productimage = view.findViewById<ImageView>(R.id.product_image)
                         val prod_date = view.findViewById<TextView>(R.id.product_date)
                         val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
                         val buttonOk = view.findViewById<Button>(R.id.buttonOk)
+                        val dates=view.findViewById<TextView>(R.id.dates)
+                        val date_image=view.findViewById<ImageView>(R.id.date_image)
+                        val next_s_date = view.findViewById<TextView>(R.id.next_s_date)
+                        val last_s_date = view.findViewById<TextView>(R.id.last_s_date)
+
+                        dates.text = commonMethods.date(Constants.dateformat1)
+                        date_image.setOnClickListener { commonMethods.clickDate(dates) }
 
                         producttime.setText( productdetails[0].time)
                         productname.setText( productdetails[0].pName)
                         productcode.setText( productdetails[0].pCode)
-                        productimage.setText( productdetails[0].image)
+                        productimage.setImageBitmap( bitmapUtility.base64toBitmap(productdetails[0].image))
                         prod_date.setText( productdetails[0].date)
+                        next_s_date.setText( "Next Service : "+productdetails[0].nextServiceDate)
+                        last_s_date.setText( "Last Service : "+productdetails[0].lastServiceDate)
 
 
                         buttonOk.setOnClickListener { v ->
                             confirmDialog.dismiss()
+                            Log.e(TAG,"date = "+ dates.text.toString())
+                            productDao.update(dates.text.toString(),commonMethods.date(Constants.dateformat1),productdetails[0].id)
+                            Toast.makeText(activity!!,"Update", Toast.LENGTH_SHORT).show()
 
 
                         }

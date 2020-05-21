@@ -21,4 +21,7 @@ interface LoginDao {
 
     @Query("select empid from login")
     fun getemp_id():String
+
+    @Query("Delete from login")
+    fun deleteAll()
 }

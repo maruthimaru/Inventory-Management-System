@@ -33,6 +33,8 @@ class UploadimageAdapter(private val list: List<ImagesModel>, private val contex
         val images = list[position]
         commonMethods.loadImage( bitmapUtility.getBytes(images.bitmap),holder.img)
         holder.img.setImageBitmap(images.bitmap)
+//        holder.img.setImageBitmap(bitmapUtility.getImage(images.byteArray))
+//        holder.img.setImageBitmap(bitmapUtility.getImage(images.imageList!!.toByteArray()))
         holder.img.setOnClickListener { this@UploadimageAdapter.fullscrndialog(images.bitmap) }
     }
 

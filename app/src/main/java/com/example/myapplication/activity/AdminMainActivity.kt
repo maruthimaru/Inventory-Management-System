@@ -11,12 +11,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
+import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.fragment.AdminHomeFragment
 import com.example.myapplication.fragment.FragmentDrawer
 import com.example.myapplication.helper.CommonMethods
 
 
 class AdminMainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener  {
+
+    lateinit var commonClass: CommonMethods
+    lateinit var empLoginDao: LoginDao
+    lateinit var appDatabase: AppDatabase
     override fun onDrawerItemSelected(view: View, position: Int) {
         displayPosition(position)
     }
@@ -31,11 +37,12 @@ class AdminMainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerList
         var title = getString(R.string.app_name)
         when (position) {
             0 -> {
-
+                setfragment(AdminHomeFragment())
 
             }
             1 -> {
 //                setfragment(EmployeeProfileFragment())
+                commonClass.Logoutscreen(empLoginDao)
 
             }
             2 -> {
@@ -89,6 +96,9 @@ class AdminMainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_frame)
         customdialog = CommonMethods(this)
+        commonClass = CommonMethods(this)
+        appDatabase = AppDatabase.getDatabase(this)
+        empLoginDao=appDatabase.loginDao()
         mToolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(mToolbar)
         drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout

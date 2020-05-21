@@ -91,7 +91,7 @@
                 android:textSize="@dimen/size_14dp"
                 android:visibility="visible"
                 android:textStyle="bold"
-                android:text="Enter Date" />
+                android:text="Select Next Service Date" />
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -132,7 +132,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/size_14dp"
                 android:textStyle="bold"
-                android:text="Enter Time" />
+                android:text="Select Time" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
