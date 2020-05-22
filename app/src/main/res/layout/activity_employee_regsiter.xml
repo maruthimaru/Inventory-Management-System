@@ -94,7 +94,7 @@
                 android:textSize="@dimen/size_14dp"
                 android:padding="@dimen/size_3dp"
                 android:background="@drawable/bordergray"
-                android:inputType="textPostalAddress"
+                android:inputType="number"
                 android:hint="Enter Age" />
             <TextView
                 android:id="@+id/typetext"

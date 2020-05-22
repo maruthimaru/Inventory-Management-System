@@ -1,6 +1,5 @@
 package com.example.myapplication.adapter
 
-import android.app.Dialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,26 +10,32 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.db.table.ProductDetails
+import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.RepairProductImageDao
 import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
-import kotlinx.android.synthetic.main.activity_login.view.*
 import java.util.*
 
-class Repair_ProductAdapter(private val context: Context, private val list: MutableList<RepairProduct>, private val mListener: ListAdapterListener) : RecyclerView.Adapter<Repair_ProductAdapter.MyViewHolder>() {
+class Repair_ProductAdapter(private val context: Context, private val list: MutableList<RepairProduct>, private val mListener: ListAdapterListener,isAdmin:Boolean) : RecyclerView.Adapter<Repair_ProductAdapter.MyViewHolder>() {
     private val tempItems: List<RepairProduct>
 
     private var commonMethods: CommonMethods? = null
     private var bitmapUtility: BitmapUtility?= null
-
+    private var isAdmin=false
+    private lateinit var repairProductImageDao: RepairProductImageDao;
+    lateinit var appDatabase: AppDatabase
     private val TAG = "suplierview"
     interface ListAdapterListener { // create an interface
-        fun onClickButton(position: Int, repairProduct: RepairProduct)  // create callback function
+        fun onClickButtonDelete(position: Int, repairProduct: RepairProduct)  // create callback function
         fun onClickCheckOut(repairProduct: RepairProduct)
         fun onClickButtonInfo(position: Int, repairProduct: RepairProduct)
     }
 
+    fun removeData(position: Int){
+        list.removeAt(position)
+        notifyDataSetChanged()
+    }
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal lateinit var pname: TextView
@@ -42,6 +47,7 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
         internal lateinit var cardview: CardView
         internal lateinit var message:ImageView
         internal lateinit var imagerecyclerView: RecyclerView
+        internal lateinit var delete: TextView
 
         init {
             this.pname=view.findViewById(R.id.pname)
@@ -53,15 +59,18 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
             this.message=view.findViewById(R.id.message)
             this.cardview=view.findViewById(R.id.cardview)
             this.imagerecyclerView=view.findViewById(R.id.recycle_image)
+            this.delete= view.findViewById(R.id.delete)
         }
     }
 
     init {
 
         this.tempItems = ArrayList(list)
-
+    this.isAdmin=isAdmin
         this.commonMethods= CommonMethods(context)
         bitmapUtility = BitmapUtility(context)
+        appDatabase= AppDatabase.getDatabase(context)
+        repairProductImageDao=appDatabase.repairProductImage()
 
     }
 
@@ -84,19 +93,31 @@ class Repair_ProductAdapter(private val context: Context, private val list: Muta
             if (position != -1 ) {
                 Log.e(TAG, "POSITION: $position")
                 // use callback function to Return the Position
-                mListener.onClickButton(position,model)
+                mListener.onClickButtonDelete(position,model)
 
             }
         }
+
+        if(isAdmin){
+            holder.message.visibility=View.VISIBLE
+            holder.delete.visibility=View.INVISIBLE
+        }else{
+            holder.message.visibility=View.GONE
+            holder.delete.visibility=View.VISIBLE
+        }
         holder.message.setOnClickListener {
             mListener.onClickButtonInfo(position, model)
-
         }
 
+        holder.delete.setOnClickListener {
+            mListener.onClickButtonDelete(position,model)
+        }
+
+        var imageList=repairProductImageDao.getpId(model.imgId)
         model.imagelist
         Log.e(TAG,"imagesize " + model.imagelist!!.size)
-        val imageAdapter:ImageAdapter
-        imageAdapter= ImageAdapter(context,model.imagelist!!)
+        val imageAdapter:RepairImageAdapter
+        imageAdapter= RepairImageAdapter(context,imageList)
         val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         holder.imagerecyclerView.layoutManager = layoutManager
         holder.imagerecyclerView.setHasFixedSize(true)

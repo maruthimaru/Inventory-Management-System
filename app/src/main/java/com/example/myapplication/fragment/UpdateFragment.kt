@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.adapter.Repair_ProductAdapter
 import com.example.myapplication.adapter.Update_ProductAdapter
 import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.db.dao.LoginDao
@@ -19,7 +18,7 @@ import com.example.myapplication.db.table.Login
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.CommonMethods
-import java.util.ArrayList
+import java.util.*
 
 class UpdateFragment:Fragment(), Update_ProductAdapter.ListAdapterListener{
     private val TAG: String= UpdateFragment::class.java.simpleName

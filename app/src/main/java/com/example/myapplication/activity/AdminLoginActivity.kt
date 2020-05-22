@@ -29,7 +29,7 @@ class AdminLoginActivity : AppCompatActivity(), View.OnClickListener  {
 
                 if (id == "") run {
                     adminid!!.requestFocus()
-                    adminid!!.error = "please Enter company id"
+                    adminid!!.error = "please Enter Admin id"
                 }  else {
                     //getNotification()
                     if(id=="1234") {

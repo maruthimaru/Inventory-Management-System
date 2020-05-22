@@ -22,6 +22,7 @@ import com.example.myapplication.db.AppDatabase
 import com.example.myapplication.db.dao.LoginDao
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.dao.RepairProductDao
+import com.example.myapplication.db.dao.RepairProductImageDao
 import com.example.myapplication.db.table.Login
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
@@ -48,6 +49,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
     lateinit var repairporductDao:RepairProductDao
+    lateinit var repairProductImageDao: RepairProductImageDao
     lateinit var empLoginDao: LoginDao
     internal lateinit var commonMethods: CommonMethods
 
@@ -68,6 +70,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         commonMethods= CommonMethods(activity!!)
         productDao=appDatabase.productDetailDao()
         repairporductDao=appDatabase.repairProductDao()
+        repairProductImageDao = appDatabase.repairProductImage()
         empLoginDao=appDatabase.loginDao()
         empLoginDao.getemp_id()
 
@@ -79,7 +82,7 @@ class RepairListFragment : Fragment(),Repair_ProductAdapter.ListAdapterListener 
         try {
             repairlist= repairporductDao.getempid(empLoginDao.getemp_id()) as ArrayList<RepairProduct>
             Log.e(TAG,"repairlistttt " + repairlist.size )
-            repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment )
+            repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@RepairListFragment,false )
             recyclerView.adapter = repairadapter
 
         }catch (e : Exception){
@@ -129,7 +132,10 @@ Log.e(TAG,"exception" +e.localizedMessage)
         fragmentTransaction.commit()
     }
 
-    override fun onClickButton(position: Int, repairProduct: RepairProduct) {
+    override fun onClickButtonDelete(position: Int, repairProduct: RepairProduct) {
+            repairporductDao.deleteSingle(repairProduct.id)
+        repairProductImageDao.deleteSingle(repairProduct.imgId)
+            repairadapter.removeData(position)
 
     }
 

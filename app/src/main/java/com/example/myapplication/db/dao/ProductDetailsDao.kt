@@ -23,4 +23,7 @@ interface ProductDetailsDao {
     @Query("UPDATE product_details SET next_service_date = :nextDate, last_service_date=:lastDate WHERE id = :uid")
     fun update(nextDate: String,lastDate: String, uid: Int?)
 
+    @Query("Delete from product_details where id = :p_code ")
+    fun deleteSingle(p_code:Int)
+
 }

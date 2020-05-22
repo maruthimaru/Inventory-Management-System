@@ -68,8 +68,9 @@ class AdminProductFragment:Fragment(),AdminProductDetailsAdapter.ListAdapterList
         fragmentTransaction.commit()
     }
 
-    override fun onClickButton(position: Int, productDetails: ProductDetails) {
-
+    override fun onClickButtonDelete(position: Int, productDetails: ProductDetails) {
+productDetailsDao.deleteSingle(productDetails.id)
+        adminProductDetailsAdapter.removeData(position)
     }
 
     override fun onClickButtonInfo(position: Int, productDetails: ProductDetails) {

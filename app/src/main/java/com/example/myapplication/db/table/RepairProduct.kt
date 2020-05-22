@@ -17,6 +17,8 @@ class RepairProduct {
     @NonNull
     @ColumnInfo(name = "id")
     var id=0;
+    @ColumnInfo(name = "img_id")
+    var imgId=0;
     @ColumnInfo(name = "p_name")
     lateinit var pName:String;
     @ColumnInfo(name = "p_code")
@@ -48,7 +50,8 @@ class RepairProduct {
         lastservicecdateTime: String,
         employeeid: String,
         reply_message: String,
-        imagelist: List<String>
+        imagelist: List<String>,
+        imgId:Int
     ) {
         this.pName = pName
         this.pCode = pCode
@@ -59,5 +62,6 @@ class RepairProduct {
         this.employeeid=employeeid
         this.reply_message=reply_message
         this.imagelist = imagelist
+        this.imgId = imgId
     }
 }

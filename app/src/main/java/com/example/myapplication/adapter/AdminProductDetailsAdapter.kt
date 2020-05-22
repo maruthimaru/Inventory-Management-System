@@ -10,15 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.db.table.ProductDetails
-import com.example.myapplication.db.table.RepairProduct
 import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
 import com.example.myapplication.helper.Zoomimage
-import kotlinx.android.synthetic.main.activity_login.view.*
 import java.util.*
 
 class AdminProductDetailsAdapter(private val context: Context, private val list: MutableList<ProductDetails>, private val mListener: ListAdapterListener) : RecyclerView.Adapter<AdminProductDetailsAdapter.MyViewHolder>() {
@@ -30,11 +27,15 @@ class AdminProductDetailsAdapter(private val context: Context, private val list:
 
     private val TAG = "suplierview"
     interface ListAdapterListener { // create an interface
-        fun onClickButton(position: Int, productDetails: ProductDetails)  // create callback function
+        fun onClickButtonDelete(position: Int, productDetails: ProductDetails)  // create callback function
 
         fun onClickButtonInfo(position: Int, productDetails: ProductDetails)
     }
 
+    fun removeData(position: Int){
+        list.removeAt(position)
+        notifyDataSetChanged()
+    }
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal lateinit var pname: TextView
@@ -43,6 +44,7 @@ class AdminProductDetailsAdapter(private val context: Context, private val list:
         internal lateinit var pro_time:TextView
         internal lateinit var product_image: ImageView
         internal lateinit var cardview: CardView
+        internal lateinit var delete: TextView
 
         //internal lateinit var imagerecyclerView: RecyclerView
 
@@ -53,6 +55,7 @@ class AdminProductDetailsAdapter(private val context: Context, private val list:
             this.pro_time = view.findViewById(R.id.time)
             this.product_image=view.findViewById(R.id.product_image)
             this.cardview=view.findViewById(R.id.product_card)
+            this.delete= view.findViewById(R.id.delete)
         }
     }
 
@@ -85,9 +88,13 @@ class AdminProductDetailsAdapter(private val context: Context, private val list:
             if (position != -1 ) {
                 Log.e(TAG, "POSITION: $position")
                 // use callback function to Return the Position
-                mListener.onClickButton(position,model)
+//                mListener.onClickButton(position,model)
 
             }
+        }
+
+        holder.delete.setOnClickListener {
+            mListener.onClickButtonDelete(position,model)
         }
 
 

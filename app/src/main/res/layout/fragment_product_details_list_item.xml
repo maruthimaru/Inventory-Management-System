@@ -30,6 +30,17 @@
                 android:layout_height="@dimen/size_65dp"/>
 
             <TextView
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textColor="@color/white"
+                android:paddingLeft="@dimen/size_5dp"
+                android:paddingRight="@dimen/size_5dp"
+                android:background="@drawable/buttonboxshapeand_red"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
                 android:id="@+id/pname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

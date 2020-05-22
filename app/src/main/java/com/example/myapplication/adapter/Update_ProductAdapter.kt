@@ -42,6 +42,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
         internal lateinit var cardview: CardView
         internal lateinit var message:ImageView
         internal lateinit var imagerecyclerView: RecyclerView
+        internal lateinit var delete: TextView
 
         init {
             this.pname=view.findViewById(R.id.pname)
@@ -53,6 +54,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
             this.message=view.findViewById(R.id.message)
             this.cardview=view.findViewById(R.id.cardview)
             this.imagerecyclerView=view.findViewById(R.id.recycle_image)
+            this.delete= view.findViewById(R.id.delete)
         }
     }
 
@@ -78,6 +80,7 @@ class Update_ProductAdapter(private val context: Context, private val list: Muta
         holder.pro_time.text=model.time
         holder.product_image.setImageBitmap(bitmapUtility!!.base64toBitmap(model.image))
 
+        holder.delete.visibility=View.INVISIBLE
 
 
         holder.cardview.setOnClickListener { v ->

@@ -25,5 +25,10 @@ interface RepairProductDao {
  @Query("select * from repair_product where reply_message!= '' and employeeid=:emp_id ")
  fun updatelist(emp_id: String):List<RepairProduct>
 
+    @Query("Select MAX(id) from repair_product limit 1")
+    fun getLastId():Int
+
+    @Query("Delete from repair_product where id = :p_code ")
+    fun deleteSingle(p_code:Int)
 
 }

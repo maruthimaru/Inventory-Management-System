@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.dao.NotificationDao
 import com.example.myapplication.db.dao.ProductDetailsDao
 import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.helper.BitmapUtility
@@ -33,11 +34,14 @@ class AdminHomeFragment: Fragment(){
     lateinit var damage_repair:Button
     lateinit var Product:Button
     lateinit var damage:Button
+    lateinit var setting:Button
     internal var list= ArrayList<ProductDetails>()
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
+    lateinit var notificationDao: NotificationDao
     internal lateinit var commonMethods: CommonMethods
     lateinit var bitmapUtility: BitmapUtility
+    lateinit var notification:TextView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,10 +53,19 @@ class AdminHomeFragment: Fragment(){
         damage_repair=view.findViewById(R.id.damage_repair)
         Product=view.findViewById(R.id.Product)
         damage=view.findViewById(R.id.damage)
+        setting=view.findViewById(R.id.setting)
+        notification=view.findViewById(R.id.notification)
         appDatabase = AppDatabase.getDatabase(activity!!)
         commonMethods= CommonMethods(activity!!)
         bitmapUtility = BitmapUtility(activity!!)
         productDao=appDatabase.productDetailDao()
+        notificationDao = appDatabase.notificationDao()
+
+        notification.setText(notificationDao.getAll().size.toString() + " New Damaged product occur")
+
+        setting.setOnClickListener {
+            setfragment(AdminContactFragment())
+        }
 
         damage_repair.setOnClickListener{
                    val connectIntent = Intent(activity, QRCodeScannerPortait::class.java)
@@ -63,6 +76,7 @@ class AdminHomeFragment: Fragment(){
         }
 
         damage.setOnClickListener{
+            notificationDao.deleteAll()
             setfragment(AdminRepairListFragment())
         }
 

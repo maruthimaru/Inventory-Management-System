@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         admin_image.setOnClickListener{
             val intent = Intent(this, AdminLoginActivity::class.java)
             startActivity(intent)
-            finish()
+//            finish()
         }
 
         emp_image.setOnClickListener{

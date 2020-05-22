@@ -67,7 +67,7 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
 //        recyclerView.layoutManager = lLayout
         repairlist= repairporductDao.getAll() as ArrayList<RepairProduct>
         Log.e(TAG,"repairlistttt " + repairlist.size )
-        repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@AdminRepairListFragment )
+        repairadapter = Repair_ProductAdapter( activity!!,repairlist,this@AdminRepairListFragment,true )
         recyclerView.adapter = repairadapter
     }
 
@@ -81,7 +81,7 @@ class AdminRepairListFragment:Fragment(),Repair_ProductAdapter.ListAdapterListen
         fragmentTransaction.commit()
     }
 
-    override fun onClickButton(position: Int, repairProduct: RepairProduct) {
+    override fun onClickButtonDelete(position: Int, repairProduct: RepairProduct) {
 
 
     }

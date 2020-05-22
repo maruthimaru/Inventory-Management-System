@@ -4,14 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.myapplication.db.dao.EmpRegDao
-import com.example.myapplication.db.dao.LoginDao
-import com.example.myapplication.db.dao.ProductDetailsDao
-import com.example.myapplication.db.dao.RepairProductDao
+import com.example.myapplication.db.dao.*
 import com.example.myapplication.db.table.*
 
 @Database(
-        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class], version = 3, exportSchema = false)
+        entities = [Login::class,EmpReg::class,ProductDetails::class,RepairProduct::class, RepairProductImage::class, Notification::class,AdminContact::class], version = 3, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
 
@@ -19,6 +16,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun productDetailDao():ProductDetailsDao
     abstract fun repairProductDao():RepairProductDao
     abstract fun empRegDao():EmpRegDao
+    abstract fun repairProductImage():RepairProductImageDao
+    abstract fun adminContactDao():AdminContactDao
+    abstract fun notificationDao():NotificationDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

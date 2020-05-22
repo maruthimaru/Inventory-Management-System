@@ -25,10 +25,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapter.UploadimageAdapter
 import com.example.myapplication.db.AppDatabase
-import com.example.myapplication.db.dao.LoginDao
-import com.example.myapplication.db.dao.ProductDetailsDao
-import com.example.myapplication.db.dao.RepairProductDao
+import com.example.myapplication.db.dao.*
+import com.example.myapplication.db.table.Notification
+import com.example.myapplication.db.table.ProductDetails
 import com.example.myapplication.db.table.RepairProduct
+import com.example.myapplication.db.table.RepairProductImage
 import com.example.myapplication.helper.BitmapUtility
 import com.example.myapplication.helper.CommonMethods
 import com.example.myapplication.helper.Constants
@@ -40,17 +41,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AlertdialogFragment:Fragment(){
+    private var nextId: Int = 0
+    private lateinit var productdetails: List<ProductDetails>
     private val TAG: String= AlertdialogFragment::class.java.simpleName
     lateinit var appDatabase: AppDatabase
     lateinit var productDao: ProductDetailsDao
+    lateinit var notificationDao: NotificationDao
+    lateinit var adminContactDao: AdminContactDao
     lateinit var empLoginDao: LoginDao
     lateinit var repairporductDao: RepairProductDao
+    lateinit var repairporductImageDao: RepairProductImageDao
     internal lateinit var commonMethods: CommonMethods
     lateinit var recyclerView_doc_img: RecyclerView
     private lateinit var uploadimageAdapter: UploadimageAdapter
     lateinit var docpic: TextView
     internal var repairlist= ArrayList<RepairProduct>()
     private val imgList = ArrayList<ImagesModel>()
+    private val repairProductImage = ArrayList<RepairProductImage>()
     private val imagelist = ArrayList<String>()
     private val imagelistByteArray = ArrayList<ByteArray>()
     private val imagepath = ArrayList<String>()
@@ -74,10 +81,19 @@ class AlertdialogFragment:Fragment(){
         productDao=appDatabase.productDetailDao()
         repairporductDao=appDatabase.repairProductDao()
         empLoginDao=appDatabase.loginDao()
+        adminContactDao=appDatabase.adminContactDao()
+        notificationDao= appDatabase.notificationDao()
+        repairporductImageDao=appDatabase.repairProductImage()
         recyclerView_doc_img = view.findViewById(R.id.recyclerView_doc_img)
         docpic = view.findViewById(R.id.docpic)
 
-
+        var lastId=repairporductDao.getLastId()
+        Log.e(TAG,"last id: "+lastId )
+         nextId = 0
+//        if (lastId==0){
+//            nextId = lastId
+//        }else{
+        nextId = lastId+1
 
         recyclerView_doc_img.setHasFixedSize(true)
         recyclerView_doc_img.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -141,7 +157,7 @@ class AlertdialogFragment:Fragment(){
         val last_s_date = view.findViewById<TextView>(R.id.last_s_date)
 
         try {
-            var productdetails = productDao.getid(Constants.pcode)
+            productdetails = productDao.getid(Constants.pcode)
             Log.e("TAG", " alertproduct_code  " + productdetails.size)
 
             producttime.setText( productdetails[0].time)
@@ -161,9 +177,18 @@ class AlertdialogFragment:Fragment(){
                     RepairProduct(productdetails[0].pName,productdetails[0].pCode,productdetails[0].image,
                         commonMethods.getdate(Constants.dateformat1),commonMethods.getdate(
                             Constants.timeformat12),"",empLoginDao.getemp_id(),
-                        "",imagelist))
+                        "",imagelist,nextId))
                 Log.e("TAG", " doctorregister  " + repairlist.size)
                 repairporductDao.insert(repairlist)
+                repairporductImageDao.insert(repairProductImage)
+                var notification=Notification(productdetails[0].pName+" is damaged product code is "+ productdetails[0].pCode)
+                notificationDao.insert(notification)
+                Log.e(TAG,"phone: "+adminContactDao.getPhone())
+                if (adminContactDao.getPhone()==null|| adminContactDao.getPhone()==""){
+                    Toast.makeText(activity!!,"Update the admin phone number to send sms notification",Toast.LENGTH_LONG).show()
+                }else{
+                    commonMethods.sendSMS(adminContactDao.getPhone(),productdetails[0].pName+" is damaged product code is "+ productdetails[0].pCode)
+                }
                 Constants.pcode=""
                 setfragment(RepairListFragment())
                 //        Log.e(TAG,"insertdata " + repairporductDao.getAll().size)
@@ -335,6 +360,8 @@ class AlertdialogFragment:Fragment(){
     private fun setCompressedImage() {
         val e: FileNotFoundException
         var imagesModel: ImagesModel
+
+//        }
         val bitmap = BitmapFactory.decodeFile(compressedImage!!.absolutePath)
         try {
             val outputStream = FileOutputStream(actualImage!!)
@@ -349,9 +376,11 @@ class AlertdialogFragment:Fragment(){
             imagelistByteArray.add(bitmapUtility.getBytes(bitmap))
             imagesModel = ImagesModel()
             imagesModel.bitmap = bitmap
-            imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
-            imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
+//            imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
+//            imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
             imgList.add(imagesModel)
+
+            repairProductImage.add(RepairProductImage(nextId,productdetails[0].pCode,bitmapUtility.getStringImage(bitmap)))
             uploadimageAdapter = UploadimageAdapter(imgList, activity!!)
             recyclerView_doc_img.adapter = uploadimageAdapter
         }
@@ -364,9 +393,10 @@ class AlertdialogFragment:Fragment(){
         imagelistByteArray.add(bitmapUtility.getBytes(bitmap))
         imagesModel = ImagesModel()
         imagesModel.bitmap = bitmap
-        imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
-        imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
+//        imagesModel.byteArray=bitmapUtility.getBytes(bitmap)
+//        imagesModel.imageList=String(bitmapUtility.getBytes(bitmap))
         imgList.add(imagesModel)
+        repairProductImage.add(RepairProductImage(nextId,productdetails[0].pCode,bitmapUtility.getStringImage(bitmap)))
         //        Log.e(TAG, "setCompressedImage: Image List Size : "+list.size() );
         if (imgList.size > 0) {
             //            imgmsg.setVisibility( View.VISIBLE );
